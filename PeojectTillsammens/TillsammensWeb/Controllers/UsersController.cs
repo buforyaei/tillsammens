@@ -17,16 +17,17 @@ namespace TillsammensWeb.Controllers
         private DataModelContainer db = new DataModelContainer();
 
         // GET: api/Users
+        [ResponseType(typeof(IQueryable<User>))]
         public IQueryable<User> GetUserSet()
         {
             //db.UserSet.Add(new User()
             //{
-            //    Desc = "Hey there!",
+            //    Desc = "Hey there I'm using GeoFriends!",
             //    FriendList = "",
             //    Id = 0,
             //    LastVisit = DateTime.Now.ToString(),
-            //    Login = "titutek",
-            //    MailAddress = "slonecznik_94@o2.pl",
+            //    Login = "hojeczka90",
+            //    MailAddress = "patipatka@o2.pl",
             //    Password = "password",
             //    X = "1",
             //    Y = "1"
