@@ -7,6 +7,7 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d"
+    RequestedTheme="Dark"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Login, Source={StaticResource Locator}}">
     
@@ -16,10 +17,10 @@
         </core:EventTriggerBehavior>
     </interactivity:Interaction.Behaviors>-->
 
-    <Grid >
+    <Grid>
         <Image
             Source="/Resources/Images/background_01.png" Stretch="UniformToFill" />
-
+        
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="150"/>
@@ -33,8 +34,8 @@
             
             <TextBlock 
                 Grid.Row="0"
-                Text="Tillsammens" 
-                Style ="{StaticResource HeaderTextBlockStyle}"/>
+                Text="TILLSAMMENS" 
+                Style ="{StaticResource BigHeaderTextBlockStyle}"/>
             <TextBlock 
                 Grid.Row="1"
                 Text="login" 
@@ -69,11 +70,11 @@
                 Grid.Row="6"
                 BorderThickness="0"
                 VerticalAlignment="Bottom" 
-                HorizontalAlignment="Right"
+                HorizontalAlignment="Left"
                 Command="{Binding OpenCreateAccountCmd}">
             <TextBlock
                 Text="Don't have an account?"
-                Style="{StaticResource DescriptionTextBlockStyle}"/>
+                Style="{StaticResource HeaderTextBlockStyle}"/>
             </Button>
         </Grid>
         

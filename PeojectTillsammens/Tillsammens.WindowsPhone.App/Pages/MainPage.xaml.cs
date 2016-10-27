@@ -33,6 +33,7 @@ namespace Tillsammens.WindowsPhone.App.Pages
         {
             base.OnNavigatedTo(e);
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;
+            ViewModel.LoadCmd.Execute(null);
 
         }
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)

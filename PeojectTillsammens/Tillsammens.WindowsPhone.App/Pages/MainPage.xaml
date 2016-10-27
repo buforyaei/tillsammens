@@ -6,19 +6,49 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    RequestedTheme="Dark"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Main, Source={StaticResource Locator}}">
-
+    
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/MainPageStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    
     <Grid>
-        <Pivot Title="TILLSAMMENS">
+        <Pivot 
+            Title="TILLSAMMENS"
+            Style="{StaticResource PivotStyle}"
+            ItemsPanel="{StaticResource ItemsPanelTemplate}"
+            ItemContainerStyle="{StaticResource PivotItemStyle}">
+            <Pivot.HeaderTemplate>
+                <DataTemplate>
+                    <Grid Margin="-5,0,16,0">
+                        <TextBlock Text="{Binding}" FontSize="50" FontWeight="Light" />
+                    </Grid>
+                </DataTemplate>
+            </Pivot.HeaderTemplate>
+            <Pivot.TitleTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <TextBlock Text="{Binding}" Style="{StaticResource HeaderTextBlockStyle}" Margin="12,30,0,0" />
+                    </Grid>
+                </DataTemplate>
+            </Pivot.TitleTemplate>
             <Pivot.Background>
                 <ImageBrush 
                     ImageSource="../Resources/Images/background_02.png" Stretch="UniformToFill"/>
             </Pivot.Background>
 
-            <PivotItem Header="friends">
-                <Grid>
-                    <ListView/>
+            <PivotItem Header="friends" Margin="0">
+                <Grid Margin="0">
+                    <ListView 
+                        Margin="12,10,12,0" Background="Transparent"
+                        ItemTemplate="{StaticResource ItemTemplate}" ItemsSource="{Binding Friends}"
+                        IsItemClickEnabled="true" />
                 </Grid>
             </PivotItem>
           
@@ -54,9 +84,10 @@
                 </Grid>
             </PivotItem>
             <PivotItem Header="profile">
-                <ScrollViewer>
-                    
-                </ScrollViewer>
+                <ScrollViewer/>
+            </PivotItem>
+            <PivotItem Header="invitations">
+                <ListView/>
             </PivotItem>
         </Pivot>
     </Grid>
@@ -70,8 +101,6 @@
                 <AppBarButton 
                     Icon="Refresh" 
                     Label="refresh"/>
-           
-
             </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

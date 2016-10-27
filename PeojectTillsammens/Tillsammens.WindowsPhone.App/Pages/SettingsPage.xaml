@@ -6,10 +6,29 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    RequestedTheme="Dark"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Settings, Source={StaticResource Locator}}">
 
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="../Resources/Images/background_4.png" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <TextBlock 
+            Grid.Row="0"
+            Text="TILLSAMMENS" 
+            Style="{StaticResource HeaderTextBlockStyle}"/>
+        <TextBlock 
+            Grid.Row="1"
+            Text="settings" 
+            Style="{StaticResource BigHeaderTextBlockStyle}"/>
     </Grid>
 </Page>

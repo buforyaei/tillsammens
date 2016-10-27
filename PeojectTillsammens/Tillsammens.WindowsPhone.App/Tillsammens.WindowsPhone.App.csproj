@@ -132,6 +132,8 @@
     <Content Include="Resources\Images\background_01.png" />
     <Content Include="Resources\Images\background_02.png" />
     <Content Include="Resources\Images\background_03.png" />
+    <Content Include="Resources\Images\background_4.png" />
+    <Content Include="Resources\Images\background_5.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -153,6 +155,11 @@
     <Page Include="Pages\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\MainPageStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Styles\Skins\MainSkin.xaml">
       <SubType>Designer</SubType>

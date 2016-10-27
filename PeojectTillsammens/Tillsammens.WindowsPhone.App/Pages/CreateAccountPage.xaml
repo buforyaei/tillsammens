@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    RequestedTheme="Dark"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding CreateAcccount, Source={StaticResource Locator}}">
 
@@ -16,39 +17,52 @@
         
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="150"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
            
             <TextBlock 
                 Grid.Row="0"
-                Text="CREATE ACCOUNT" TextWrapping="Wrap"
+                Text="TILLSAMMENS" TextWrapping="Wrap"
                 Style ="{StaticResource HeaderTextBlockStyle}"/>
             <TextBlock 
                 Grid.Row="1"
+                Text="create account" TextWrapping="Wrap"
+                Style ="{StaticResource BigHeaderTextBlockStyle}"/>
+            <TextBlock 
+                Grid.Row="2"
                 Text="e-mail address" 
                 Style ="{StaticResource DescriptionTextBlockStyle}"/>
-            <TextBox Grid.Row="2"
+            <TextBox Grid.Row="3"
                 Style ="{StaticResource LightTextBoxStyle}"/>
             <TextBlock 
-                Grid.Row="3"
+                Grid.Row="4"
                 Text="login" 
                 Style ="{StaticResource DescriptionTextBlockStyle}"/>
-            <TextBox Grid.Row="4"
+            <TextBox Grid.Row="5"
                 Style ="{StaticResource LightTextBoxStyle}"/>
             <TextBlock 
-                Grid.Row="5"
+                Grid.Row="6"
                 Text="password" 
                 Style ="{StaticResource DescriptionTextBlockStyle}"/>
             <PasswordBox 
-                Grid.Row="6"
+                Grid.Row="7"
+                Style ="{StaticResource LightPasswordBoxStyle}"/>
+            <TextBlock 
+                Grid.Row="8"
+                Text="confirm password" 
+                Style ="{StaticResource DescriptionTextBlockStyle}"/>
+            <PasswordBox 
+                Grid.Row="9"
                 Style ="{StaticResource LightPasswordBoxStyle}"/>
         </Grid>
     </Grid>

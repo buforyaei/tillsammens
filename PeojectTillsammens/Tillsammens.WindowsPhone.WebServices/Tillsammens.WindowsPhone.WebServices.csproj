@@ -80,10 +80,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <Folder Include="Dto\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Consts\TillsammensConsts.cs" />
+    <Compile Include="Dto\FriendModel.cs" />
     <Compile Include="Exceptions\WebServiceException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Interfaces\ITillsammensWebService.cs" />
