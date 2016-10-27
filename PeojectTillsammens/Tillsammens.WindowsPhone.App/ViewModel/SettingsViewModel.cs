@@ -10,14 +10,13 @@ using GalaSoft.MvvmLight.Views;
 
 namespace Tillsammens.WindowsPhone.App.ViewModel
 {
-    public class MainViewModel : ViewModelBase
+    public class SettingsViewModel : ViewModelBase
     {
         private readonly INavigationService _navigationService;
 
         public ICommand LoadCmd { get; set; }
-        public ICommand GoToSettingsCmd { get; set; }
 
-        public MainViewModel(INavigationService navigationService)
+        public SettingsViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
             InitializeCommands();
@@ -26,9 +25,8 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
         private void InitializeCommands()
         {
             LoadCmd = new RelayCommand(Load);
-            GoToSettingsCmd = new RelayCommand(GoToSettings);
         }
-       
+
         private void Load()
         {
             int a = 9;
@@ -39,11 +37,5 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
             _navigationService.GoBack();
         }
 
-        private void GoToSettings()
-        {
-            _navigationService.NavigateTo("Settings");
-        }
-
     }
 }
-

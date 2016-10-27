@@ -32,7 +32,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock
                         Grid.Row="0"
-                        Text="find users" 
+                        Text="find users by login" 
                         Style="{StaticResource DescriptionTextBlockStyle}"/>
                     <Grid  Grid.Row="1">
                         <Grid.ColumnDefinitions>
@@ -53,6 +53,11 @@
                     <ListView Grid.Row="2"/>
                 </Grid>
             </PivotItem>
+            <PivotItem Header="profile">
+                <ScrollViewer>
+                    
+                </ScrollViewer>
+            </PivotItem>
         </Pivot>
     </Grid>
     <Page.BottomAppBar>
@@ -60,7 +65,8 @@
             <CommandBar.PrimaryCommands >
                 <AppBarButton 
                     Icon="repair" 
-                    Label="settings"/>
+                    Label="settings"
+                    Command="{Binding GoToSettingsCmd}"/>
                 <AppBarButton 
                     Icon="Refresh" 
                     Label="refresh"/>
