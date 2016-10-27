@@ -14,8 +14,10 @@ namespace Tillsammens.WindowsPhone.App.Modules
     {
         public override void Load()
         {
-            AutomapperConfiguration.Configure();
+            //AutomapperConfiguration.Configure();
             Kernel.Bind<LoginViewModel>().ToSelf().InSingletonScope();
+            Kernel.Bind<CreateAccountViewModel>().ToSelf().InSingletonScope();
+            Kernel.Bind<MainViewModel>().ToSelf().InSingletonScope();
             Kernel.Bind<IDialogService>().To<DialogService>();
             Kernel.Bind<INavigationService>().ToConstant(CreateNavigationService());
         }
@@ -24,7 +26,10 @@ namespace Tillsammens.WindowsPhone.App.Modules
         {
             var navigationService = new NavigationService();
             navigationService.Configure("Login", typeof(LoginPage));
+            navigationService.Configure("CreateAccount", typeof(CreateAccountPage));
+            navigationService.Configure("Main", typeof(MainPage));
             return navigationService;
         }
+         
     }
 }

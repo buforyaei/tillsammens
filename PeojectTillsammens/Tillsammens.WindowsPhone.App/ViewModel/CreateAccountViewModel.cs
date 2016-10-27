@@ -1,4 +1,8 @@
-using System.Diagnostics.Contracts;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -6,15 +10,14 @@ using GalaSoft.MvvmLight.Views;
 
 namespace Tillsammens.WindowsPhone.App.ViewModel
 {
-    public class LoginViewModel : ViewModelBase
+    public class CreateAccountViewModel :ViewModelBase
     {
         private readonly INavigationService _navigationService;
 
         public ICommand LoadCmd { get; set; }
-        public ICommand LoginCmd { get; set; }
-        public ICommand OpenCreateAccountCmd { get; set; }
+        public ICommand CreateAccountCmd { get; set; }
 
-        public LoginViewModel(INavigationService navigationService)
+        public CreateAccountViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
             InitializeCommands();
@@ -23,21 +26,22 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
         private void InitializeCommands()
         {
             LoadCmd = new RelayCommand(Load);
-            OpenCreateAccountCmd = new RelayCommand(OpenCreateAccount);
-            LoginCmd = new RelayCommand(Login);
+            CreateAccountCmd = new RelayCommand(CreateAccount);
         }
-        private void Login()
+        private void CreateAccount()
         {
-            _navigationService.NavigateTo("Main");
+            int a = 9;
         }
         private void Load()
         {
             int a = 9;
         }
 
-        private void OpenCreateAccount()
+        public void GoBack()
         {
-            _navigationService.NavigateTo("CreateAccount");
+            _navigationService.GoBack();
         }
+
     }
 }
+

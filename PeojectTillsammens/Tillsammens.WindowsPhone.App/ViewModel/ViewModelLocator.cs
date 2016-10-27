@@ -21,6 +21,17 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
                 get { return BootStrapper.Kernel.Get<LoginViewModel>(); }
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public CreateAccountViewModel CreateAcccount
+        {
+            get { return BootStrapper.Kernel.Get<CreateAccountViewModel>(); }
+        }
+
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public MainViewModel Main
+        {
+            get { return BootStrapper.Kernel.Get<MainViewModel>(); }
+        }
         public static void InitializeBootstraper()
         {
             if (BootStrapper != null) return;

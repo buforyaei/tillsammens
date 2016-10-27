@@ -10,13 +10,72 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Login, Source={StaticResource Locator}}">
     
-    <interactivity:Interaction.Behaviors>
+    <!--<interactivity:Interaction.Behaviors>
         <core:EventTriggerBehavior EventName="Loaded">
             <core:InvokeCommandAction Command="{Binding LoadCmd}" />
         </core:EventTriggerBehavior>
-    </interactivity:Interaction.Behaviors>
+    </interactivity:Interaction.Behaviors>-->
 
-    <Grid>
-        <Button Click="ButtonBase_OnClick" Command="{Binding LoadCmd}"/>
+    <Grid >
+        <Image
+            Source="/Resources/Images/background_01.png" Stretch="UniformToFill" />
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <TextBlock 
+                Grid.Row="0"
+                Text="Tillsammens" 
+                Style ="{StaticResource HeaderTextBlockStyle}"/>
+            <TextBlock 
+                Grid.Row="1"
+                Text="login" 
+                Style ="{StaticResource DescriptionTextBlockStyle}"/>
+            <TextBox Grid.Row="2"
+                Style ="{StaticResource LightTextBoxStyle}"/>
+            <TextBlock 
+                Grid.Row="3"
+                Text="password" 
+                Style ="{StaticResource DescriptionTextBlockStyle}"/>
+            <PasswordBox 
+                Grid.Row="4"
+                Style ="{StaticResource LightPasswordBoxStyle}"/>
+
+            <Button 
+                Grid.Row="5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                BorderThickness="0"
+                Command="{Binding LoginCmd}">
+                <Grid>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock 
+                            Style ="{StaticResource HeaderTextBlockStyle}"
+                            Text="login" 
+                            VerticalAlignment="Center"/>
+                        <Image Source="/Resources/Images/arrowRight.png"/>
+                    </StackPanel>
+                </Grid>
+            </Button>
+            <Button 
+                Grid.Row="6"
+                BorderThickness="0"
+                VerticalAlignment="Bottom" 
+                HorizontalAlignment="Right"
+                Command="{Binding OpenCreateAccountCmd}">
+            <TextBlock
+                Text="Don't have an account?"
+                Style="{StaticResource DescriptionTextBlockStyle}"/>
+            </Button>
+        </Grid>
+        
     </Grid>
 </Page>

@@ -6,7 +6,6 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
-using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -14,38 +13,25 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using GalaSoft.MvvmLight.Messaging;
 using Tillsammens.WindowsPhone.App.ViewModel;
-
 
 namespace Tillsammens.WindowsPhone.App.Pages
 {
-    public sealed partial class LoginPage : Page
+    public sealed partial class CreateAccountPage : Page
     {
-        private LoginViewModel ViewModel
-        {
-            get { return DataContext as LoginViewModel; }
-        }
-        public LoginPage()
+        public CreateAccountPage()
         {
             this.InitializeComponent();
-
-            this.NavigationCacheMode = NavigationCacheMode.Enabled;
-            
         }
-
+        private CreateAccountViewModel ViewModel
+        {
+            get { return DataContext as CreateAccountViewModel; }
+        }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;
-            if (e.Parameter is bool && (bool)e.Parameter)
-            {
-                Application.Current.Exit();
-            }
-            else
-            {
-                ViewModel.LoadCmd.Execute(null);
-            }
+            
         }
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
@@ -54,8 +40,9 @@ namespace Tillsammens.WindowsPhone.App.Pages
         }
         private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
         {
-            Application.Current.Exit();
+            ViewModel.GoBack();
             e.Handled = true;
         }
+
     }
 }

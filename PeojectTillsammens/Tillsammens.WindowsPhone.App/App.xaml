@@ -5,6 +5,9 @@
     xmlns:viewModel="using:Tillsammens.WindowsPhone.App.ViewModel">
     <Application.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Skins/MainSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
             <viewModel:ViewModelLocator x:Key="Locator"/>
         </ResourceDictionary>
   </Application.Resources>
