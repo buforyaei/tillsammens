@@ -86,6 +86,7 @@
     <Compile Include="Model\WebServiceStatus.cs" />
     <Compile Include="Modules\DomainModule.cs" />
     <Compile Include="Modules\WebServicesModule.cs" />
+    <Compile Include="Services\AppSession.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Interfaces\ITillsammensService.cs" />

@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="Consts\TillsammensConsts.cs" />
     <Compile Include="Dto\FriendModel.cs" />
+    <Compile Include="Dto\SearchedUser.cs" />
     <Compile Include="Exceptions\WebServiceException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Interfaces\ITillsammensWebService.cs" />

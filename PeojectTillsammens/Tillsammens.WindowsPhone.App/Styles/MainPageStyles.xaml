@@ -17,29 +17,89 @@
                     <ImageBrush Stretch="UniformToFill" ImageSource="{Binding PhotoUri}"/>
                 </Ellipse.Fill>
             </Ellipse>
-            <Border Grid.Column="1" Background="Black" Opacity="0.5" Margin="8,8,0,8">
-                <Grid >
+            <Border Grid.Column="1" Background="Black"  Opacity="0.6" Margin="8,8,0,8" HorizontalAlignment="Stretch">
+                <Grid  HorizontalAlignment="Stretch">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                
-                    <Grid Grid.Row="0" >
+
+                    <Grid Grid.Row="0"  HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition  Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding Login}" HorizontalAlignment="Left" Foreground="White" FontSize="20" Margin="6,2,2,2" />
+                        <TextBlock Grid.Column="0" Text="{Binding Login}" HorizontalAlignment="Left" Foreground="White" FontSize="20" FontWeight="SemiBold" Margin="6,2,2,2" />
                         <TextBlock Grid.Column="1" Text="{Binding LastVisit}" HorizontalAlignment="Right" Foreground="White" FontSize="16" Margin="2,2,6,2"/>        
                     </Grid>
-                    <TextBlock Grid.Row="1" Text="{Binding Desc}" TextWrapping="Wrap"  Foreground="White" FontSize="16" Margin="6,0,6,2" />
+                    <TextBlock Grid.Row="1" Text="{Binding Desc}" TextWrapping="Wrap"  Foreground="White" FontSize="16" Margin="6,0,6,2"  HorizontalAlignment="Stretch"/>
            
                 </Grid>
             </Border>
         </Grid>
     </DataTemplate>
-    
-    
+
+    <DataTemplate x:Key="SearchedUserItemTemplate">
+        <Grid  MinHeight="4" Margin="0,0,0,4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Ellipse Height="50"  Width="50">
+                <Ellipse.Fill>
+                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding PhotoUri}"/>
+                </Ellipse.Fill>
+            </Ellipse>
+            <Border Grid.Column="1" Background="Black"  Opacity="0.8" Margin="8,8,0,8" HorizontalAlignment="Stretch">
+                <TextBlock Text="{Binding Login}" HorizontalAlignment="Stretch" Foreground="White" FontSize="24" VerticalAlignment="Stretch" Margin="6,2,2,2" />
+            </Border>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="FriendTileTemplate">
+        <Grid  
+            Margin="0,0,7,7"
+            Height="105" 
+            Width="105">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Ellipse 
+                Height="80"  
+                Width="80"
+                Grid.Row="0">
+                <Ellipse.Fill>
+                    <ImageBrush 
+                        Stretch="UniformToFill" 
+                        ImageSource="{Binding PhotoUri}"/>
+                </Ellipse.Fill>
+            </Ellipse>
+            <Border 
+                Grid.Row="1" 
+                Background="Black"  
+                Opacity="0.6" 
+                HorizontalAlignment="Stretch" 
+                VerticalAlignment="Bottom" 
+                Height="25" 
+                Margin="6,2,6,0" >
+                <TextBlock 
+                    Text="{Binding Login}" 
+                    VerticalAlignment="Stretch"     
+                    HorizontalAlignment="Stretch" 
+                    Foreground="White"  
+                    FontSize="16"
+                    Margin="3,2,3,1" />
+            </Border>
+        </Grid>
+    </DataTemplate>
+
+    <Style x:Key="SimpleItemContainerStyle" TargetType="ListViewItem">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    </Style>
+
+
     <Thickness x:Key="PivotPortraitThemePadding">0</Thickness>
 
     <Thickness x:Key="PivotLandscapeThemePadding">0</Thickness>
