@@ -42,7 +42,7 @@
                 <ImageBrush 
                     ImageSource="../Resources/Images/background_02.png" Stretch="UniformToFill"/>
             </Pivot.Background>-->
-
+            <!--FRIENDS MODULE -->
             <PivotItem Header="people" Margin="0">
                 <Grid Margin="0">
                     <ListView 
@@ -53,7 +53,7 @@
                         IsItemClickEnabled="true" />
                 </Grid>
             </PivotItem>
-
+            <!--SEARCH MODULE -->
             <PivotItem Header="search"  Margin="0">
                 <Grid  Margin="0">
                     <Grid.RowDefinitions>
@@ -96,7 +96,7 @@
                     </ListView> 
                 </Grid>
             </PivotItem>
-
+            <!--PROFILE MODULE -->
             <PivotItem Header="profile"  Margin="0">
                 <ScrollViewer Margin="0,16,0,0">
                     <Grid>
@@ -121,13 +121,16 @@
                                 Height="170" Width="170"/>
                             <TextBlock 
                                 Grid.Column="1"
-                                Style="{StaticResource BigHeaderTextBlockStyle}"
                                 TextWrapping="Wrap"
+                                VerticalAlignment="Bottom"
+                                FontSize="32"
+                                FontWeight="SemiLight"
+                                Margin="16,0,0,0"
                                 Text="{Binding ProfileLogin}"/>
                         </Grid>
                         <TextBlock 
                             Grid.Row="1"
-                            Text="new photo url"
+                            Text="photo url"
                             Style="{StaticResource DescriptionTextBlockStyle}"/>
                         <Grid  Grid.Row="2">
                             <Grid.ColumnDefinitions>
@@ -145,7 +148,6 @@
                                 Height="60">
                             </AppBarButton>
                         </Grid>
-                       
                         <TextBlock 
                             Grid.Row="3"
                             Text="status"
@@ -175,14 +177,10 @@
                             Text="{Binding ProfileLastVisit}"
                             Style="{StaticResource HeaderTextBlockStyle}"/>
                     </Grid>
-
                 </ScrollViewer>
             </PivotItem>
-            
-            <PivotItem Header="invitations">
-                <ListView/>
-            </PivotItem>
         </Pivot>
+        
     </Grid>
     <Page.BottomAppBar>
         <CommandBar  IsSticky="True">
