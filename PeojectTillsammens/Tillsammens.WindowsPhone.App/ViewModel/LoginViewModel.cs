@@ -26,13 +26,11 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
             OpenCreateAccountCmd = new RelayCommand(OpenCreateAccount);
             LoginCmd = new RelayCommand(Login);
         }
+        private void Load() { }
+
         private void Login()
         {
             _navigationService.NavigateTo("Main");
-        }
-        private void Load()
-        {
-            int a = 9;
         }
 
         private void OpenCreateAccount()

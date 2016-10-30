@@ -30,12 +30,8 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
         }
         private void CreateAccount()
         {
-            int a = 9;
         }
-        private void Load()
-        {
-            int a = 9;
-        }
+        private void Load() { }
 
         public void GoBack()
         {

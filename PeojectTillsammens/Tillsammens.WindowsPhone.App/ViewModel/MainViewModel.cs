@@ -69,6 +69,11 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
         private void Load()
         {
             InitializeProfile();
+            InitializeFakeLists();
+        }
+
+        private void InitializeFakeLists()
+        {
             var friends = new ObservableCollection<FriendModel>();
             var searched = new ObservableCollection<SearchedUser>();
             var a = new FriendModel
@@ -81,9 +86,8 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
                     "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTx7-NNaXJpCNWmUJcHO36WEMWLQS3J0y8d3rjPmpKK5dv8sirrag",
                 X = "50.059992",
                 Y = "19.8517511"
-
             };
-           
+
             var b = new FriendModel
             {
                 Id = 2,
@@ -91,7 +95,7 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
                 LastVisit = DateTime.Now.Date.ToString("t"),
                 Login = "Grażynka",
                 PhotoUri =
-"http://hbz.h-cdn.co/assets/16/10/980x490/landscape-1457457820-hbz-april-2016-jennifer-aniston-a-list-00-index.jpg",
+                    "http://hbz.h-cdn.co/assets/16/10/980x490/landscape-1457457820-hbz-april-2016-jennifer-aniston-a-list-00-index.jpg",
                 X = "50.059992",
                 Y = "19.8517511"
             };
@@ -102,16 +106,16 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
                 LastVisit = DateTime.Now.Date.ToString("t"),
                 Login = "Delcara",
                 PhotoUri =
-                " http://media.vogue.com/r/w_660/2014/12/11/best-eyelashes-cara-delevingne.jpg",
+                    " http://media.vogue.com/r/w_660/2014/12/11/best-eyelashes-cara-delevingne.jpg",
                 X = "50.059992",
                 Y = "19.8517511"
             };
             var c = new SearchedUser
             {
-                Id=2,
+                Id = 2,
                 Login = "Andy91",
                 PhotoUri =
-"http://hbz.h-cdn.co/assets/16/10/980x490/landscape-1457457820-hbz-april-2016-jennifer-aniston-a-list-00-index.jpg"
+                    "http://hbz.h-cdn.co/assets/16/10/980x490/landscape-1457457820-hbz-april-2016-jennifer-aniston-a-list-00-index.jpg"
             };
             var d = new SearchedUser
             {
@@ -125,7 +129,7 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
                 Id = 2,
                 Login = "AnnaKowal90",
                 PhotoUri =
-                  " http://media.vogue.com/r/w_660/2014/12/11/best-eyelashes-cara-delevingne.jpg",
+                    " http://media.vogue.com/r/w_660/2014/12/11/best-eyelashes-cara-delevingne.jpg",
             };
             friends.Add(a);
             friends.Add(b);

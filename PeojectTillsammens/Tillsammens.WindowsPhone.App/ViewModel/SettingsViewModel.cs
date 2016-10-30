@@ -27,10 +27,7 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
             LoadCmd = new RelayCommand(Load);
         }
 
-        private void Load()
-        {
-            int a = 9;
-        }
+        private void Load() { }
 
         public void GoBack()
         {
