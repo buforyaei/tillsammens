@@ -46,5 +46,10 @@ namespace Tillsammens.WindowsPhone.App.Pages
             ViewModel.GoBack();
             e.Handled = true;
         }
+
+        private void ListViewBase_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            ViewModel.OpenMapCmd.Execute(e.ClickedItem);
+        }
     }
 }

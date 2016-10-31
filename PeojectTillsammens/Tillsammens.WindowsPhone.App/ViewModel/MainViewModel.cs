@@ -22,8 +22,11 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
         private string _profileLogin;
         private string _profileDescription;
         private string _profileLastVisit;
+
         public ICommand LoadCmd { get; set; }
+        public ICommand RemoveFriendCmd { get; set; }
         public ICommand GoToSettingsCmd { get; set; }
+        public ICommand OpenMapCmd { get; set; }
 
         public MainViewModel(INavigationService navigationService)
         {
@@ -64,8 +67,18 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
         {
             LoadCmd = new RelayCommand(Load);
             GoToSettingsCmd = new RelayCommand(GoToSettings);
+            RemoveFriendCmd = new RelayCommand(RemoveFriend);
+            OpenMapCmd = new RelayCommand<FriendModel>(OpenMap);
         }
-        
+
+        private void RemoveFriend()
+        {
+        }
+        private void OpenMap(FriendModel friend)
+        {
+            _navigationService.NavigateTo("Map", friend);
+        }
+
         private void Load()
         {
             InitializeProfile();

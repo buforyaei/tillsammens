@@ -19,6 +19,7 @@ namespace Tillsammens.WindowsPhone.App.Modules
             Kernel.Bind<CreateAccountViewModel>().ToSelf().InSingletonScope();
             Kernel.Bind<MainViewModel>().ToSelf().InSingletonScope();
             Kernel.Bind<SettingsViewModel>().ToSelf().InSingletonScope();
+            Kernel.Bind<MapViewModel>().ToSelf().InSingletonScope();
             Kernel.Bind<IDialogService>().To<DialogService>();
             Kernel.Bind<INavigationService>().ToConstant(CreateNavigationService());
         }
@@ -30,6 +31,7 @@ namespace Tillsammens.WindowsPhone.App.Modules
             navigationService.Configure("CreateAccount", typeof(CreateAccountPage));
             navigationService.Configure("Main", typeof(MainPage));
             navigationService.Configure("Settings", typeof(SettingsPage));
+            navigationService.Configure("Map", typeof(MapPage));
             return navigationService;
         }
          

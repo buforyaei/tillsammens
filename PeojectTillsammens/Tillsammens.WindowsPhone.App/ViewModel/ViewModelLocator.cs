@@ -38,6 +38,13 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
         {
             get { return BootStrapper.Kernel.Get<SettingsViewModel>(); }
         }
+
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public MapViewModel Map
+        {
+            get { return BootStrapper.Kernel.Get<MapViewModel>(); }
+        }
+
         public static void InitializeBootstraper()
         {
             if (BootStrapper != null) return;

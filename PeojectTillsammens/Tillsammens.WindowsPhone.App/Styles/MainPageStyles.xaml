@@ -3,10 +3,27 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+	xmlns:utils="using:Tillsammens.WindowsPhone.App.Utils"
 	mc:Ignorable="d">
 
     <DataTemplate x:Key="ItemTemplate">
         <Grid  MinHeight="4" Margin="0,0,0,4">
+            <interactivity:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="Holding">
+                    <utils:OpenListItemMenuFlyoutAction/>
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+            <FlyoutBase.AttachedFlyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem
+                        Text="remove"
+                        Command="{Binding Main.RemoveFriendCmd,
+                            Source={StaticResource Locator}}"
+                        CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                </MenuFlyout>
+            </FlyoutBase.AttachedFlyout>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80"/>
                 <ColumnDefinition Width="*"/>

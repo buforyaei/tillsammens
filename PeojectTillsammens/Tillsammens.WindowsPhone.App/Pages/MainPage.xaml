@@ -42,6 +42,7 @@
                 <ImageBrush 
                     ImageSource="../Resources/Images/background_02.png" Stretch="UniformToFill"/>
             </Pivot.Background>-->
+            
             <!--FRIENDS MODULE -->
             <PivotItem Header="people" Margin="0">
                 <Grid Margin="0">
@@ -50,6 +51,7 @@
                         ItemContainerStyle="{StaticResource SimpleItemContainerStyle}"
                         ItemTemplate="{StaticResource ItemTemplate}"
                         ItemsSource="{Binding Friends}"
+                        ItemClick="ListViewBase_OnItemClick"
                         IsItemClickEnabled="true" />
                 </Grid>
             </PivotItem>
