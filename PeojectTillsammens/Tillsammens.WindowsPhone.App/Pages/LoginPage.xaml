@@ -18,8 +18,8 @@
     </interactivity:Interaction.Behaviors>-->
 
     <Grid>
-        <Image
-            Source="/Resources/Images/background_01.png" Stretch="UniformToFill" />
+        <!--<Image
+            Source="/Resources/Images/background_01.png" Stretch="UniformToFill" />-->
         
         <Grid>
             <Grid.RowDefinitions>

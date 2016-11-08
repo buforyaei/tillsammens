@@ -9,14 +9,23 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Map, Source={StaticResource Locator}}">
+    
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/MapPageStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
 
     <Grid>
-        <maps:MapControl Name="MapControl" Loaded="MapControl_Loaded" >
-            <Ellipse Height="80"  Width="80"  maps:MapControl.Location="{Binding Location}" >
-                <Ellipse.Fill>
-                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Friend.PhotoUri}"/>
-                </Ellipse.Fill>
-            </Ellipse>
+        <maps:MapControl 
+            ZoomLevel="15" 
+            Center="{Binding Friend[0].Geopoint}">
+            <maps:MapItemsControl
+                 
+                ItemsSource="{Binding Friend}"
+                ItemTemplate="{StaticResource MapItemTemplate}"/>
         </maps:MapControl>
     </Grid>
 </Page>

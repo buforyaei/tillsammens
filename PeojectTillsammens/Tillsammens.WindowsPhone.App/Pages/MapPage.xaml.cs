@@ -7,6 +7,9 @@ using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
+using Windows.Storage;
+using Windows.Storage.Streams;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
@@ -14,7 +17,10 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Shapes;
+using AutoMapper.QueryableExtensions.Impl;
 using Tillsammens.WindowsPhone.App.ViewModel;
 
 namespace Tillsammens.WindowsPhone.App.Pages
@@ -46,24 +52,39 @@ namespace Tillsammens.WindowsPhone.App.Pages
             e.Handled = true;
         }
 
-        private void MapControl_Loaded(object sender, RoutedEventArgs e)
+        private async void MapControl_Loaded(object sender, RoutedEventArgs e)
         {
-            BasicGeoposition myBasic = new BasicGeoposition();
-            myBasic.Altitude = 0;
-            myBasic.Latitude = 50.2915127;//double.Parse(ViewModel.Friend.X);
-            myBasic.Longitude = 18.6685934;//double.Parse(ViewModel.Friend.Y);
+            var myBasic = new BasicGeoposition
+            {
+                Altitude = 0,
+                Latitude = 50.2915127,
+                Longitude = 18.6685934
+            };
+            //double.Parse(ViewModel.Friend.X);
+            //double.Parse(ViewModel.Friend.Y);
 
-            Geopoint myGeoPoint = new Geopoint(myBasic);
-            MapControl.Center = myGeoPoint;
-            MapControl.ZoomLevel = 15;
+            //var myGeoPoint = new Geopoint(myBasic);
+            //MapControl.Center = myGeoPoint;
+            //MapControl.ZoomLevel = 15;
 
-            var mapIcon = new MapIcon();
-            mapIcon.Image = Windows.Storage.Streams.RandomAccessStreamReference.CreateFromUri(
-                new Uri(ViewModel.Friend.PhotoUri));
-            mapIcon.NormalizedAnchorPoint = new Point(0.25, 0.9);
-            mapIcon.Location = myGeoPoint;
-            mapIcon.Title = ViewModel.Friend.Login;
-            MapControl.MapElements.Add(mapIcon);
+            //var mapIcon = new MapIcon();
+            //var mapSth = new MapPolygon();
+            //var imag = new Image();
+            //imag.Source = new BitmapImage(new Uri(ViewModel.Friend.PhotoUri,UriKind.Absolute));
+            //imag.Width = 50;
+            //imag.Height = 50;
+            //var file = imag as FileRandomAccessStream;
+            //mapIcon.Image = RandomAccessStreamReference.CreateFromFile(imag.Source); ;
+            
+            
+           
+
+            //mapIcon.NormalizedAnchorPoint = new Point(0.25, 0.9);
+            //mapIcon.Location = myGeoPoint;
+            //mapIcon.Title = ViewModel.Friend.Login;
+            //MapControl.MapElements.Add(mapIcon);
+            //MapControl.Center = myGeoPoint;
+            //MapControl.ZoomLevel = 15;
         }
     }
 }

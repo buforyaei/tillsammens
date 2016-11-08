@@ -11,9 +11,9 @@
     DataContext="{Binding Settings, Source={StaticResource Locator}}">
 
     <Grid>
-        <Grid.Background>
+        <!--<Grid.Background>
             <ImageBrush ImageSource="../Resources/Images/background_4.png" Stretch="UniformToFill"/>
-        </Grid.Background>
+        </Grid.Background>-->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
