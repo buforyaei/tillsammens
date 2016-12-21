@@ -38,10 +38,10 @@
                     </Grid>
                 </DataTemplate>
             </Pivot.TitleTemplate>
-            <!--<Pivot.Background>
+            <Pivot.Background>
                 <ImageBrush 
                     ImageSource="../Resources/Images/background_02.png" Stretch="UniformToFill"/>
-            </Pivot.Background>-->
+            </Pivot.Background>
             
             <!--FRIENDS MODULE -->
             <PivotItem Header="people" Margin="0">

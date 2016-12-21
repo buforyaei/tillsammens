@@ -14,14 +14,22 @@ namespace TillsammensWeb.Models
     
     public partial class User
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            this.Invitation = new HashSet<Invitation>();
+        }
+    
         public int Id { get; set; }
         public string Login { get; set; }
-        public string Password { get; set; }
-        public string MailAddress { get; set; }
-        public string LastVisit { get; set; }
-        public string X { get; set; }
-        public string Y { get; set; }
-        public string Desc { get; set; }
-        public string FriendList { get; set; }
+        public System.DateTime LastVisit { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
+        public string Description { get; set; }
+        public string PhotoUri { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Invitation> Invitation { get; set; }
+        public virtual Crednetials Crednetials { get; set; }
     }
 }

@@ -10,29 +10,38 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using TillsammensWeb.Models;
 
+//using TillsammensWeb.Models;
+
 namespace TillsammensWeb.Controllers
 {
     public class UsersController : ApiController
     {
-        private DataModelContainer db = new DataModelContainer();
+        private DataModelContainer1 db = new DataModelContainer1();
 
-        // GET: api/Users
-        [ResponseType(typeof(IQueryable<User>))]
+       // GET: api/Users
+       [ResponseType(typeof(IQueryable<User>))]
         public IQueryable<User> GetUserSet()
         {
-            //db.UserSet.Add(new User()
-            //{
-            //    Desc = "Hey there I'm using GeoFriends!",
-            //    FriendList = "",
-            //    Id = 0,
-            //    LastVisit = DateTime.Now.ToString(),
-            //    Login = "hojeczka90",
-            //    MailAddress = "patipatka@o2.pl",
-            //    Password = "password",
-            //    X = "1",
-            //    Y = "1"
-            //});
-            //db.SaveChanges();
+            try
+            {
+                db.UserSet.Add(new User()
+                {
+                    Description = "Hey there I'm using GeoFriends!",
+                    FriendsList = "",
+                    LastVisit = DateTime.Now,
+                    Login = "hojeczka90",
+                    PhotoUri = "http://www.alebilet.pl/blog/content/images/2016/10/Ariana-Grande-2-500x375c.jpg",
+                    Password = "password",
+                    X = 50.0335829,
+                    Y = 18.3982267
+                });
+               db.SaveChanges();
+            }
+            catch
+            {
+
+            }
+
             var users = db.UserSet;
             return users;
         }

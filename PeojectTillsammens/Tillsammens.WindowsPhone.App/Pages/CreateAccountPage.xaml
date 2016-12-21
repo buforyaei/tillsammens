@@ -11,9 +11,9 @@
     DataContext="{Binding CreateAcccount, Source={StaticResource Locator}}">
 
     <Grid>
-        <!--<Grid.Background>
+        <Grid.Background>
             <ImageBrush ImageSource="/Resources/Images/background_03.png" Stretch="UniformToFill" />
-        </Grid.Background>-->
+        </Grid.Background>
         
         <Grid>
             <Grid.RowDefinitions>

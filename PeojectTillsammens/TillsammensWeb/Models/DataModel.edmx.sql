@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/11/2016 21:04:01
--- Generated from EDMX file: c:\users\tytus\documents\visual studio 2015\Projects\PeojectTillsammens\TillsammensWeb\Models\DataModel.edmx
+-- Date Created: 11/13/2016 00:56:09
+-- Generated from EDMX file: C:\Users\Tytus\Documents\aSEMESTR 7\PI\tillsammens\PeojectTillsammens\TillsammensWeb\Models\DataModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [ProjectTillsammensDataBase];
+USE [TillsammensDataBase];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -30,23 +30,23 @@ GO
 -- Creating table 'UserSet'
 CREATE TABLE [dbo].[UserSet] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Login] nvarchar(max)  NOT NULL,
+    [Login] nvarchar(20)  NOT NULL,
     [Password] nvarchar(max)  NOT NULL,
-    [MailAddress] nvarchar(max)  NOT NULL,
-    [LastVisit] nvarchar(max)  NOT NULL,
-    [X] nvarchar(max)  NOT NULL,
-    [Y] nvarchar(max)  NOT NULL,
-    [Desc] nvarchar(max)  NOT NULL,
-    [FriendList] nvarchar(max)  NOT NULL
+    [LastVisit] datetime  NOT NULL,
+    [X] float  NOT NULL,
+    [Y] float  NOT NULL,
+    [Description] nvarchar(100)  NOT NULL,
+    [FriendsList] nvarchar(max)  NOT NULL,
+    [PhotoUri] nvarchar(max)  NOT NULL
 );
 GO
 
 -- Creating table 'InvitationSet'
 CREATE TABLE [dbo].[InvitationSet] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [SenderId] nvarchar(max)  NOT NULL,
-    [RecieverId] nvarchar(max)  NOT NULL,
-    [IsAccepted] nvarchar(max)  NOT NULL
+    [SenderId] int  NOT NULL,
+    [RecieverId] int  NOT NULL,
+    [IsAccepted] bit  NOT NULL
 );
 GO
 

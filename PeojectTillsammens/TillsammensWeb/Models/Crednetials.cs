@@ -12,15 +12,9 @@ namespace TillsammensWeb.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Invitation
+    public partial class Crednetials
     {
-        public int Id { get; set; }
-        public int SenderId { get; set; }
-        public int RecieverId { get; set; }
-        public bool IsAccepted { get; set; }
-        public bool IsRejected { get; set; }
         public int UserId { get; set; }
-    
-        public virtual User User { get; set; }
+        public string Password { get; set; }
     }
 }

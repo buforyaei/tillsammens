@@ -13,10 +13,10 @@ namespace TillsammensWeb.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DataModelContainer : DbContext
+    public partial class DataModelContainer1 : DbContext
     {
-        public DataModelContainer()
-            : base("name=DataModelContainer")
+        public DataModelContainer1()
+            : base("name=DataModelContainer1")
         {
         }
     
@@ -27,5 +27,6 @@ namespace TillsammensWeb.Models
     
         public virtual DbSet<User> UserSet { get; set; }
         public virtual DbSet<Invitation> InvitationSet { get; set; }
+        public virtual DbSet<Crednetials> CrednetialsSet { get; set; }
     }
 }

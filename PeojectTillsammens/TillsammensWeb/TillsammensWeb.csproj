@@ -232,7 +232,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\DataLayerConnection.cs" />
     <Compile Include="Models\DataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -306,6 +305,7 @@
     </EntityDeploy>
     <Content Include="Models\DataModel.edmx.diagram">
       <DependentUpon>DataModel.edmx</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="Properties\PublishProfiles\TillsammensWeb - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

@@ -20,7 +20,7 @@
 
     <Grid>
         <maps:MapControl 
-            ZoomLevel="15" 
+            ZoomLevel="12" 
             Center="{Binding Friend[0].Geopoint}">
             <maps:MapItemsControl
                  
