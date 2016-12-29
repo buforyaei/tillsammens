@@ -8,6 +8,9 @@ namespace Tillsammens.WindowsPhone.WebServices.Consts
 {
     class TillsammensConsts
     {
+        public static string BaseAddress = "http://project18api.azurewebsites.net";
+        public static string UsersApi = "/api/users/";
+        public static string ValuesApi = "/api/values/";
 
     }
 }

@@ -97,6 +97,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Messages\ShowTopProgressBarMessage.cs" />
     <Compile Include="Modules\AutomapperConfiguration.cs" />
     <Compile Include="Modules\AutomapperProfile.cs" />
     <Compile Include="Modules\UiModule.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MapViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
+    <Compile Include="ViewModel\TillsammensViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -189,7 +191,6 @@
   <ItemGroup>
     <Folder Include="Controls\" />
     <Folder Include="Converters\" />
-    <Folder Include="Messages\" />
     <Folder Include="Model\" />
     <Folder Include="Strings\" />
     <Folder Include="UserControls\" />

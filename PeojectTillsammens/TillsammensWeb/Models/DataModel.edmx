@@ -8,6 +8,10 @@
   <EntityContainer Name="DataModelStoreContainer">
     <EntitySet Name="UserSet" EntityType="DataModel.Store.UserSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="InvitationSet" EntityType="DataModel.Store.InvitationSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="UserInvitation" Association="DataModel.Store.UserInvitation">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="Invitation" EntitySet="InvitationSet" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="UserSet">
     <Key>
@@ -15,13 +19,12 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Login" Type="nvarchar" Nullable="false" MaxLength="20" />
-    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
     <Property Name="LastVisit" Type="datetime" Nullable="false" />
     <Property Name="X" Type="float" Nullable="false" />
     <Property Name="Y" Type="float" Nullable="false" />
     <Property Name="Description" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="FriendsList" Type="nvarchar(max)" Nullable="false" />
     <Property Name="PhotoUri" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="InvitationSet">
     <Key>
@@ -31,7 +34,21 @@
     <Property Name="SenderId" Type="int" Nullable="false" />
     <Property Name="RecieverId" Type="int" Nullable="false" />
     <Property Name="IsAccepted" Type="bit" Nullable="false" />
+    <Property Name="IsRejected" Type="bit" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
   </EntityType>
+  <Association Name="UserInvitation">
+    <End Role="User" Type="DataModel.Store.UserSet" Multiplicity="1" />
+    <End Role="Invitation" Type="DataModel.Store.InvitationSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Invitation">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -39,14 +56,9 @@
         <EntityContainer Name="DataModelContainer1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="UserSet" EntityType="DataModel.User" />
           <EntitySet Name="InvitationSet" EntityType="DataModel.Invitation" />
-          <EntitySet Name="CrednetialsSet" EntityType="DataModel.Crednetials" />
           <AssociationSet Name="UserInvitation" Association="DataModel.UserInvitation">
             <End Role="User" EntitySet="UserSet" />
             <End Role="Invitation" EntitySet="InvitationSet" />
-          </AssociationSet>
-          <AssociationSet Name="UserCrednetials" Association="DataModel.UserCrednetials">
-            <End Role="User" EntitySet="UserSet" />
-            <End Role="Crednetials" EntitySet="CrednetialsSet" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="User">
@@ -61,7 +73,7 @@
           <Property Name="Description" Type="String" Nullable="false" MaxLength="100" />
           <Property Name="PhotoUri" Type="String" Nullable="false" />
           <NavigationProperty Name="Invitation" Relationship="DataModel.UserInvitation" FromRole="User" ToRole="Invitation" />
-          <NavigationProperty Name="Crednetials" Relationship="DataModel.UserCrednetials" FromRole="User" ToRole="Crednetials" />
+          <Property Name="Password" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="Invitation">
           <Key>
@@ -75,13 +87,6 @@
           <NavigationProperty Name="User" Relationship="DataModel.UserInvitation" FromRole="Invitation" ToRole="User" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="Crednetials">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Password" Type="String" Nullable="false" />
-        </EntityType>
         <Association Name="UserInvitation">
           <End Type="DataModel.User" Role="User" Multiplicity="1" />
           <End Type="DataModel.Invitation" Role="Invitation" Multiplicity="*" />
@@ -93,10 +98,6 @@
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
-        <Association Name="UserCrednetials">
-          <End Type="DataModel.User" Role="User" Multiplicity="1" />
-          <End Type="DataModel.Crednetials" Role="Crednetials" Multiplicity="1" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -114,6 +115,7 @@
           <ScalarProperty Name="Y" ColumnName="Y" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="PhotoUri" ColumnName="PhotoUri" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -124,6 +126,8 @@
           <ScalarProperty Name="SenderId" ColumnName="SenderId" />
           <ScalarProperty Name="RecieverId" ColumnName="RecieverId" />
           <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
+          <ScalarProperty Name="IsRejected" ColumnName="IsRejected" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -41,21 +41,21 @@
                 Grid.Row="4"
                 Text="login" 
                 Style ="{StaticResource DescriptionTextBlockStyle}"/>
-            <TextBox Grid.Row="5"
+            <TextBox Grid.Row="5" Name="Login"
                 Style ="{StaticResource LightTextBoxStyle}"/>
             <TextBlock 
                 Grid.Row="6"
                 Text="password" 
                 Style ="{StaticResource DescriptionTextBlockStyle}"/>
             <PasswordBox 
-                Grid.Row="7"
+                Grid.Row="7" Name="PasswordBoxFirst"
                 Style ="{StaticResource LightPasswordBoxStyle}"/>
             <TextBlock 
                 Grid.Row="8"
                 Text="confirm password" 
                 Style ="{StaticResource DescriptionTextBlockStyle}"/>
             <PasswordBox 
-                Grid.Row="9"
+                Grid.Row="9" Name="PasswordBoxSecond"
                 Style ="{StaticResource LightPasswordBoxStyle}"/>
         </Grid>
     </Grid>
@@ -64,7 +64,7 @@
             <CommandBar.PrimaryCommands >
                 <AppBarButton
                     Content="Accept"
-                    
+                    Click="ButtonBase_OnClick"
                     Icon="Accept"/>
             </CommandBar.PrimaryCommands>
         </CommandBar>

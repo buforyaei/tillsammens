@@ -57,5 +57,12 @@ namespace Tillsammens.WindowsPhone.App.Pages
             Application.Current.Exit();
             e.Handled = true;
         }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel.LoginCmd.Execute(new[] {LoginBox.Text, PasswordBox.Password});
+            LoginBox.Text = string.Empty;
+            PasswordBox.Password = string.Empty;
+        }
     }
 }

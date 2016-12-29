@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Workflow.ComponentModel.Compiler;
 using TillsammensWeb.Models;
 
 //using TillsammensWeb.Models;
@@ -19,19 +20,19 @@ namespace TillsammensWeb.Controllers
         private DataModelContainer1 db = new DataModelContainer1();
 
        // GET: api/Users
-       [ResponseType(typeof(IQueryable<User>))]
-        public IQueryable<User> GetUserSet()
+       [ResponseType(typeof(IEnumerable<User>))]
+        public IEnumerable<User> GetUserSet()
         {
             try
             {
                 db.UserSet.Add(new User()
                 {
                     Description = "Hey there I'm using GeoFriends!",
-                    FriendsList = "",
+                    Password = "roza13",
                     LastVisit = DateTime.Now,
                     Login = "hojeczka90",
                     PhotoUri = "http://www.alebilet.pl/blog/content/images/2016/10/Ariana-Grande-2-500x375c.jpg",
-                    Password = "password",
+
                     X = 50.0335829,
                     Y = 18.3982267
                 });

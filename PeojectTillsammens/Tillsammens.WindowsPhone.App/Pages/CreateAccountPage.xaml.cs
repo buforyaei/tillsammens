@@ -44,5 +44,9 @@ namespace Tillsammens.WindowsPhone.App.Pages
             e.Handled = true;
         }
 
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel.CreateAccountCmd.Execute(new [] {Login.Text, PasswordBoxFirst.Password, PasswordBoxSecond.Password});
+        }
     }
 }

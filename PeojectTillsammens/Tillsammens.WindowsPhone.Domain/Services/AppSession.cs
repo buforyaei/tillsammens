@@ -18,16 +18,11 @@ namespace Tillsammens.WindowsPhone.Domain.Services
 
         public static AppSession Current => Lazy.Value;
 
-        public FriendModel CurrentUser { get; set; }
-        public string Password { get; set; }
-       
-       
+        public UserModel CurrentUser { get; set; }
 
         public void Cleanup()
         {
             CurrentUser = null;
-            Password = null;
-           
         }
     }
 }

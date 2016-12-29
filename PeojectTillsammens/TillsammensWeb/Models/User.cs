@@ -27,9 +27,9 @@ namespace TillsammensWeb.Models
         public double Y { get; set; }
         public string Description { get; set; }
         public string PhotoUri { get; set; }
+        public string Password { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Invitation> Invitation { get; set; }
-        public virtual Crednetials Crednetials { get; set; }
     }
 }

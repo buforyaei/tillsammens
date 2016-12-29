@@ -27,6 +27,5 @@ namespace TillsammensWeb.Models
     
         public virtual DbSet<User> UserSet { get; set; }
         public virtual DbSet<Invitation> InvitationSet { get; set; }
-        public virtual DbSet<Crednetials> CrednetialsSet { get; set; }
     }
 }
