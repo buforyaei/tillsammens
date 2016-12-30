@@ -12,5 +12,15 @@ namespace Tillsammens.WindowsPhone.WebServices.Services.Interfaces
         Task<UserModel> CreateAccount(UserModel user);
 
         Task<UserModel> Login(string login, string password);
+
+        Task<IEnumerable<Invitation>> GetInvitations(int id);
+
+        Task<IEnumerable<FriendModel>> GetFriends(int id);
+
+        Task<IEnumerable<SearchedUser>> SearchFriends(string phrase);
+
+        Task<UserModel> UpdatePhotoAndDesc(UserModel user);
+
+        Task<Invitation> SendInvitation(Invitation invitation);
     }
 }

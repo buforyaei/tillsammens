@@ -5,15 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.UI.Popups;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
+using Tillsammens.WindowsPhone.Domain.Model;
 using Tillsammens.WindowsPhone.Domain.Services;
+using Tillsammens.WindowsPhone.Domain.Services.Interfaces;
 using Tillsammens.WindowsPhone.WebServices.Dto;
 
 namespace Tillsammens.WindowsPhone.App.ViewModel
 {
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : TillsammensViewModelBase
     {
         private readonly INavigationService _navigationService;
         private IEnumerable<FriendModel> _friends;
@@ -22,16 +25,35 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
         private string _profileLogin;
         private string _profileDescription;
         private string _profileLastVisit;
+        private string _searchPhrase;
+        private bool _noFriends;
 
         public ICommand LoadCmd { get; set; }
         public ICommand RemoveFriendCmd { get; set; }
         public ICommand GoToSettingsCmd { get; set; }
         public ICommand OpenMapCmd { get; set; }
+        public ICommand SearchCmd { get; set; }
+        public ICommand UpgdareUserDescOrPhotoCmd { get; set; }
+        public ICommand InviteToFriendsCmd { get; set; }
 
-        public MainViewModel(INavigationService navigationService)
+        public MainViewModel(
+            INavigationService navigationService,
+            IDialogService dialogService,
+            ITillsammensService tillsammensService)
+            :base(dialogService, tillsammensService)
         {
             _navigationService = navigationService;
             InitializeCommands();
+        }
+        public bool NoFriends
+        {
+            get { return _noFriends; }
+            set { Set(ref _noFriends, value); }
+        }
+        public string SearchPhrase
+        {
+            get { return _searchPhrase; }
+            set { Set(ref _searchPhrase, value); }
         }
         public string ProfileUri
         {
@@ -69,122 +91,194 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
             GoToSettingsCmd = new RelayCommand(GoToSettings);
             RemoveFriendCmd = new RelayCommand(RemoveFriend);
             OpenMapCmd = new RelayCommand<FriendModel>(OpenMap);
+            SearchCmd = new RelayCommand(SearchUsers);
+            UpgdareUserDescOrPhotoCmd = new RelayCommand(UpgradeUserDescOrPhoto);
+            InviteToFriendsCmd = new RelayCommand<SearchedUser>(InviteToFriends);
+        }
+
+        private async void YesButtonClick(IUICommand command)
+        {
+            if (_globalSearchedId != 0)
+            {
+                if (Friends.Any(f => f.Id == _globalSearchedId))
+                {
+                    await DialogService.ShowMessageBox("You are already friends!", string.Empty);
+                    return;
+                }
+                var result = await TillsammensService.SendInvitationAsync(
+                    new Invitation
+                    {
+                        RecieverId = _globalSearchedId,
+                        SenderId = AppSession.Current.CurrentUser.Id,
+                        Status = "Confirmable"
+                    });
+                if (result.WebServiceStatus == WebServiceStatus.Success)
+                {
+                    await DialogService.ShowMessageBox("Invitation was send succesfully.", string.Empty);
+                    return;
+                }
+                ShowWebResultCommunicate(result.WebServiceStatus);
+            }
+        }
+
+        private int _globalSearchedId = 0;
+
+        private async void InviteToFriends(SearchedUser searchedUser)
+        {
+            _globalSearchedId = searchedUser.Id;
+            var messageDialog = new MessageDialog(
+                $"Are you sure you want to invite {searchedUser.Login} to friends list?", string.Empty);
+            var yesBtn = new UICommand("Yes")
+            {
+                Invoked = YesButtonClick
+            };
+            messageDialog.Commands.Add(yesBtn);
+            var noBtn = new UICommand("No");
+            messageDialog.Commands.Add(noBtn);
+            await messageDialog.ShowAsync();
+        }
+        private async void UpgradeUserDescOrPhoto()
+        {
+            var response = await TillsammensService.UpdatePhotoAndDescAsync(new UserModel
+            {
+                Login = AppSession.Current.CurrentUser.Login,
+                Password = AppSession.Current.CurrentUser.Password,
+                Id = AppSession.Current.CurrentUser.Id,
+                CloseDate = AppSession.Current.CurrentUser.CloseDate,
+                OpenDate = AppSession.Current.CurrentUser.OpenDate,
+                Desc = ProfileDescription,
+                PhotoUri = ProfileUri,
+                LastVisit = DateTime.Now.ToString(),
+                X = AppSession.Current.CurrentUser.X,
+                Y = AppSession.Current.CurrentUser.X,
+            });
+            if (response.WebServiceStatus == WebServiceStatus.Success)
+            {
+                AppSession.Current.CurrentUser.Desc = ProfileDescription;
+                AppSession.Current.CurrentUser.PhotoUri = ProfileUri;
+                await DialogService.ShowMessageBox("Profile was updated!", string.Empty);
+            }
+            else
+            {
+                ProfileDescription = AppSession.Current.CurrentUser.Desc;
+                ProfileUri = AppSession.Current.CurrentUser.PhotoUri;
+                ShowWebResultCommunicate(response.WebServiceStatus);
+            } 
+        }
+
+        private async void SearchUsers()
+        {
+            SearchedUsers = null;
+            if (string.IsNullOrEmpty(SearchPhrase)) return;
+            var searched = await TillsammensService.SearchFriendsAsync(SearchPhrase);
+            if (searched.WebServiceStatus == WebServiceStatus.Success)
+            {
+                if (searched.Result != null && searched.Result.Any())
+                {
+                    SearchedUsers = searched.Result;
+                    return;
+                } 
+            }
+            ShowWebResultCommunicate(searched.WebServiceStatus);
         }
 
         private void RemoveFriend()
         {
+
         }
         private void OpenMap(FriendModel friend)
         {
             _navigationService.NavigateTo("Map", friend);
         }
 
-        private void Load()
+        private async void Load()
         {
             InitializeProfile();
-            InitializeFakeLists();
+            await InitializeFriendsList();
+            await GetInvitations();
         }
 
-        private void InitializeFakeLists()
+        private async Task GetInvitations()
         {
-            var friends = new ObservableCollection<FriendModel>();
-            var searched = new ObservableCollection<SearchedUser>();
-            var a = new FriendModel
+            var invitations =
+                await TillsammensService.GetInvitationsAsync
+                    (AppSession.Current.CurrentUser.Id);
+            if (invitations.WebServiceStatus != WebServiceStatus.Success)
             {
-                Id = 1,
-                Desc = "Hey there, I'm using new APP :) and it's cool.",
-                LastVisit = DateTime.Now.Date.ToString("t"),
-                Login = "Ann90",
-                PhotoUri =
-                    "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTx7-NNaXJpCNWmUJcHO36WEMWLQS3J0y8d3rjPmpKK5dv8sirrag",
-                X = "50.059992",
-                Y = "19.8517511"
-            };
+                IsWorking = false;
+                ShowWebResultCommunicate(invitations.WebServiceStatus);
+                return;
+            }
+            if (invitations.Result != null && invitations.Result.Any())
+            {
+                await ShowInvitations(invitations.Result);
+            }
+        }
 
-            var b = new FriendModel
+        private async void AcceptButtonClick(IUICommand command)
+        {
+            //post invitation change status
+        }
+        private async void RejectButtonClick(IUICommand command)
+        {
+            //post invitation change status
+        }
+        private async Task ShowInvitations(IEnumerable<Invitation> invitations)
+        {
+            var messageDialog = new MessageDialog(String.Empty,String.Empty);
+            var yesBtn = new UICommand("Accept")
             {
-                Id = 2,
-                Desc = "Dear friends, send me your invitations :))",
-                LastVisit = DateTime.Now.Date.ToString("t"),
-                Login = "Grażynka",
-                PhotoUri =
-                    "http://hbz.h-cdn.co/assets/16/10/980x490/landscape-1457457820-hbz-april-2016-jennifer-aniston-a-list-00-index.jpg",
-                X = "50.059992",
-                Y = "19.8517511"
+                Invoked = AcceptButtonClick
             };
-            var e = new FriendModel
+            messageDialog.Commands.Add(yesBtn);
+            var noBtn = new UICommand("Reject")
             {
-                Id = 2,
-                Desc = "Dear friends, send me your invitations :))",
-                LastVisit = DateTime.Now.Date.ToString("t"),
-                Login = "Delcara",
-                PhotoUri =
-                    " http://media.vogue.com/r/w_660/2014/12/11/best-eyelashes-cara-delevingne.jpg",
-                X = "50.059992",
-                Y = "19.8517511"
+                Invoked = RejectButtonClick
             };
-            var c = new SearchedUser
+            messageDialog.Commands.Add(noBtn);
+            foreach (var i in invitations)
             {
-                Id = 2,
-                Login = "Andy91",
-                PhotoUri =
-                    "http://hbz.h-cdn.co/assets/16/10/980x490/landscape-1457457820-hbz-april-2016-jennifer-aniston-a-list-00-index.jpg"
-            };
-            var d = new SearchedUser
-            {
-                Id = 2,
-                Login = "AnnaKowal90",
-                PhotoUri =
-                    "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTx7-NNaXJpCNWmUJcHO36WEMWLQS3J0y8d3rjPmpKK5dv8sirrag",
-            };
-            var f = new SearchedUser
-            {
-                Id = 2,
-                Login = "AnnaKowal90",
-                PhotoUri =
-                    " http://media.vogue.com/r/w_660/2014/12/11/best-eyelashes-cara-delevingne.jpg",
-            };
-            friends.Add(a);
-            friends.Add(b);
-            friends.Add(e);
-            friends.Add(a);
-            friends.Add(e);
-            friends.Add(b);
-            friends.Add(a);
-            friends.Add(a);
-            friends.Add(e);
-            friends.Add(a);
-            Friends = friends;
+                if (i.Status == "Confirmable")
+                {
+                    //get user with senderId
 
-            searched.Add(c);
-            searched.Add(d);
-            searched.Add(f);
-            searched.Add(d);
-            searched.Add(f);
-            searched.Add(d);
-            searched.Add(c);
-            searched.Add(f);
-            searched.Add(c);
-            searched.Add(d);
-            searched.Add(c);
-            searched.Add(f);
-            searched.Add(c);
-            searched.Add(d);
-            searched.Add(c);
-            searched.Add(d);
-            searched.Add(f);
-            searched.Add(d);
-            SearchedUsers = searched;
+                    messageDialog.Content = string.Format(
+                        $"{0} wants to add you to friends list.", i.SenderId);
+                    await messageDialog.ShowAsync();
+                }
+            }
+        }
+        private async Task InitializeFriendsList()
+        {
+            NoFriends = false;
+            Friends = null;
+            var friends = await TillsammensService.GetFriendsAsync(
+                AppSession.Current.CurrentUser.Id);
+            if (friends.WebServiceStatus != WebServiceStatus.Success)
+            {
+                IsWorking = false;
+                ShowWebResultCommunicate(friends.WebServiceStatus);
+                return;
+            }
+            if (friends.Result == null || !friends.Result.Any())
+            {
+                NoFriends = true;
+            }
+            else
+            {
+                Friends = friends.Result;
+            }
         }
 
         private void InitializeProfile()
         {
-            ProfileLogin = "Titut94";
-            ProfileDescription = "Hello, it's me! :D";
-            ProfileUri = "http://i142.photobucket.com/albums/r96/thisdayinmusic/Adele%20hand.jpg";
-            ProfileLastVisit = DateTime.Now.ToString("U");
-
-
+            if (AppSession.Current.CurrentUser != null)
+            {
+                ProfileLogin = AppSession.Current.CurrentUser.Login;
+                ProfileDescription = AppSession.Current.CurrentUser.Desc;
+                ProfileUri = AppSession.Current.CurrentUser.PhotoUri;
+                ProfileLastVisit = DateTime.Parse(AppSession.Current.CurrentUser.LastVisit).ToString("U");
+            }
         }
 
         public void GoBack()

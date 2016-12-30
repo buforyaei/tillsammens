@@ -51,5 +51,10 @@ namespace Tillsammens.WindowsPhone.App.Pages
         {
             ViewModel.OpenMapCmd.Execute(e.ClickedItem);
         }
+
+        private void SearchListView_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            ViewModel.InviteToFriendsCmd.Execute(e.ClickedItem);
+        }
     }
 }

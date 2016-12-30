@@ -13,5 +13,15 @@ namespace Tillsammens.WindowsPhone.Domain.Services.Interfaces
         Task<WebResult<UserModel>> CreateAccountAsync(UserModel user);
 
         Task<WebResult<UserModel>> LoginAsync(string login, string password);
+
+        Task<WebResult<IEnumerable<Invitation>>> GetInvitationsAsync(int id);
+
+        Task<WebResult<IEnumerable<FriendModel>>> GetFriendsAsync(int id);
+
+        Task<WebResult<IEnumerable<SearchedUser>>> SearchFriendsAsync(string phrase);
+
+        Task<WebResult<UserModel>> UpdatePhotoAndDescAsync(UserModel user);
+
+        Task<WebResult<Invitation>> SendInvitationAsync(Invitation invitation);
     }
 }

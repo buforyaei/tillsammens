@@ -76,12 +76,15 @@
                         </Grid.ColumnDefinitions>
                         <TextBox 
                             Grid.Column="0"
-                            Style="{StaticResource LightTextBoxStyle}"/>
+                            Text="{Binding SearchPhrase, Mode=TwoWay}"
+                            Style="{StaticResource LightTextBoxStyle}"
+                            />
                         <AppBarButton
                             Icon="find"
                             Grid.Column="1"
                             Margin="-16,-10,0,0"
-                            Height="60">
+                            Height="60"
+                            Command="{Binding SearchCmd}">
                         </AppBarButton>
                     </Grid>
                     <ListView 
@@ -89,7 +92,8 @@
                         Margin="16,0,16,0" Background="Transparent"
                         ItemTemplate="{StaticResource FriendTileTemplate}"
                         ItemsSource="{Binding SearchedUsers}"
-                        IsItemClickEnabled="true">
+                        IsItemClickEnabled="true"
+                        ItemClick="SearchListView_OnItemClick">
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <ItemsWrapGrid HorizontalAlignment="Stretch" Orientation="Horizontal" />
@@ -141,13 +145,14 @@
                             </Grid.ColumnDefinitions>
                             <TextBox 
                                 Grid.Column="0"
-                                Text="{Binding ProfileUri}"
+                                Text="{Binding ProfileUri, Mode=TwoWay}"
                                 Style="{StaticResource LightTextBoxStyle}"/>
                             <AppBarButton
                                 Icon="accept"
                                 Grid.Column="1"
                                 Margin="-16,-10,0,0"
-                                Height="60">
+                                Height="60"
+                                Command="{Binding UpgdareUserDescOrPhotoCmd}">
                             </AppBarButton>
                         </Grid>
                         <TextBlock 
@@ -161,13 +166,14 @@
                             </Grid.ColumnDefinitions>
                             <TextBox 
                                 Grid.Column="0"
-                                Text="{Binding ProfileDescription}"
+                                Text="{Binding ProfileDescription, Mode=TwoWay}"
                                 Style="{StaticResource LightTextBoxStyle}"/>
                             <AppBarButton
                                 Icon="accept"
                                 Grid.Column="1"
                                 Margin="-16,-10,0,0"
-                                Height="60">
+                                Height="60"
+                                Command="{Binding UpgdareUserDescOrPhotoCmd}">
                             </AppBarButton>
                         </Grid>
                         <TextBlock 

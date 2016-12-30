@@ -30,5 +30,29 @@ namespace Tillsammens.WindowsPhone.Domain.Services
             return await GetWebServiceData(() => _tillsammensWebService.Login(login, password));
         }
 
+        public async Task<WebResult<IEnumerable<Invitation>>> GetInvitationsAsync(int id)
+        {
+            return await GetWebServiceData(() => _tillsammensWebService.GetInvitations(id));
+        }
+
+        public async Task<WebResult<Invitation>> SendInvitationAsync(Invitation invitation)
+        {
+            return await GetWebServiceData(() => _tillsammensWebService.SendInvitation(invitation));
+        }
+
+        public async Task<WebResult<IEnumerable<FriendModel>>> GetFriendsAsync(int id)
+        {
+            return await GetWebServiceData(() => _tillsammensWebService.GetFriends(id));
+        }
+
+        public async Task<WebResult<IEnumerable<SearchedUser>>> SearchFriendsAsync(string phrase)
+        {
+            return await GetWebServiceData(() => _tillsammensWebService.SearchFriends(phrase));
+        }
+
+        public async Task<WebResult<UserModel>> UpdatePhotoAndDescAsync(UserModel user)
+        {
+            return await GetWebServiceData(() => _tillsammensWebService.UpdatePhotoAndDesc(user));
+        }
     }
 }
