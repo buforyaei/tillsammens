@@ -25,10 +25,6 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="160"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             
@@ -36,38 +32,53 @@
                 Grid.Row="0"
                 Text="TILLSAMMENS" 
                 Style ="{StaticResource BigHeaderTextBlockStyle}"/>
-            <TextBlock 
-                Grid.Row="1"
-                Text="login" 
-                Style ="{StaticResource DescriptionTextBlockStyle}"/>
-            <TextBox Grid.Row="2" Name="LoginBox"
-                Style ="{StaticResource LightTextBoxStyle}"/>
-            <TextBlock 
-                Grid.Row="3"
-                Text="password" 
-                Style ="{StaticResource DescriptionTextBlockStyle}"/>
-            <PasswordBox 
-                Grid.Row="4" Name="PasswordBox"
-                Style ="{StaticResource LightPasswordBoxStyle}"/>
-
+            <ProgressRing 
+                    Grid.Row="1" 
+                    IsActive="True"
+                    Foreground="White"
+                    Visibility="{Binding IsWorking, 
+                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <Grid Grid.Row="1" Visibility="{Binding IsWorking, Converter={StaticResource BooleanToOppositeVisibilityConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <TextBlock 
+                    Grid.Row="0"
+                    Text="login" 
+                    Style ="{StaticResource DescriptionTextBlockStyle}"/>
+                <TextBox Grid.Row="1" Name="LoginBox" IsSpellCheckEnabled="False"
+                    Style ="{StaticResource LightTextBoxStyle}" KeyUp="LoginBox_KeyUp"/>
+                <TextBlock 
+                    Grid.Row="2"
+                    Text="password" 
+                    Style ="{StaticResource DescriptionTextBlockStyle}"/>
+                <PasswordBox 
+                    Grid.Row="3" Name="PasswordBox"
+                    Style ="{StaticResource LightPasswordBoxStyle}" KeyUp="PasswordBox_KeyUp"/>
+                <Button 
+                    Click="ButtonBase_OnClick"
+                    Grid.Row="4"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    BorderThickness="0">
+                    <Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock 
+                                Style ="{StaticResource HeaderTextBlockStyle}"
+                                Text="login" 
+                                VerticalAlignment="Center"/>
+                            <Image Source="/Resources/Images/arrowRight.png"/>
+                        </StackPanel>
+                    </Grid>
+                </Button>
+            </Grid>
             <Button 
-                Click="ButtonBase_OnClick"
-                Grid.Row="5"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                BorderThickness="0">
-                <Grid>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock 
-                            Style ="{StaticResource HeaderTextBlockStyle}"
-                            Text="login" 
-                            VerticalAlignment="Center"/>
-                        <Image Source="/Resources/Images/arrowRight.png"/>
-                    </StackPanel>
-                </Grid>
-            </Button>
-            <Button 
-                Grid.Row="6"
+                Grid.Row="2"
                 BorderThickness="0"
                 VerticalAlignment="Bottom" 
                 HorizontalAlignment="Left"

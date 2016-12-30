@@ -41,7 +41,7 @@
                 Grid.Row="4"
                 Text="login" 
                 Style ="{StaticResource DescriptionTextBlockStyle}"/>
-            <TextBox Grid.Row="5" Name="Login"
+            <TextBox Grid.Row="5" Name="Login" IsSpellCheckEnabled="False"
                 Style ="{StaticResource LightTextBoxStyle}"/>
             <TextBlock 
                 Grid.Row="6"

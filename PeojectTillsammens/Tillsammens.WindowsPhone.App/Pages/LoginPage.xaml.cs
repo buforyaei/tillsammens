@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -63,6 +64,22 @@ namespace Tillsammens.WindowsPhone.App.Pages
             ViewModel.LoginCmd.Execute(new[] {LoginBox.Text, PasswordBox.Password});
             LoginBox.Text = string.Empty;
             PasswordBox.Password = string.Empty;
+        }
+
+        private void LoginBox_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter || e.Key == VirtualKey.Tab) PasswordBox.Focus(FocusState.Keyboard);
+        }
+
+        private void PasswordBox_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter)
+            {
+                ViewModel.LoginCmd.Execute(new[] { LoginBox.Text, PasswordBox.Password });
+                LoginBox.Text = string.Empty;
+                PasswordBox.Password = string.Empty;
+            }
+
         }
     }
 }

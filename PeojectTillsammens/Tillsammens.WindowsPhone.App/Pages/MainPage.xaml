@@ -75,6 +75,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBox 
+                            IsSpellCheckEnabled="False"
                             Grid.Column="0"
                             Text="{Binding SearchPhrase, Mode=TwoWay}"
                             Style="{StaticResource LightTextBoxStyle}"
@@ -122,6 +123,11 @@
                             </Grid.ColumnDefinitions>
                             <Image 
                                 Grid.Column="0"
+                                Source="../Resources/Images/profile.png"
+                                Stretch="UniformToFill"
+                                Height="170" Width="170"/>
+                            <Image 
+                                Grid.Column="0"
                                 Source="{Binding ProfileUri}"
                                 Stretch="UniformToFill"
                                 Height="170" Width="170"/>
@@ -144,6 +150,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBox 
+                                IsSpellCheckEnabled="False"
                                 Grid.Column="0"
                                 Text="{Binding ProfileUri, Mode=TwoWay}"
                                 Style="{StaticResource LightTextBoxStyle}"/>
@@ -165,6 +172,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBox 
+                                IsSpellCheckEnabled="False"
                                 Grid.Column="0"
                                 Text="{Binding ProfileDescription, Mode=TwoWay}"
                                 Style="{StaticResource LightTextBoxStyle}"/>

@@ -37,16 +37,16 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
             switch (status)
             {
                 case WebServiceStatus.ConnectionError:
-                    message = "ErrorServiceNotAvailable";
+                    message = "Service is not available.";
                     break;
 
                 case WebServiceStatus.ServiceError:
-                    message = "ErrorServiceNotAvailable";
+                    message = "Internal server error.";
                     break;
 
 
                 case WebServiceStatus.Unauthorized:
-                    message = "ErrorUnauthorized";
+                    message = "Wrong login or password.";
                     break;
             }
             DialogService.ShowMessageBox(message, string.Empty);
