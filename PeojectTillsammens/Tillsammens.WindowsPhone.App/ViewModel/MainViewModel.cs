@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.Devices.Geolocation;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using GalaSoft.MvvmLight;
@@ -256,7 +257,26 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
         {
             InitializeProfile();
             await InitializeFriendsList();
+            await UpdateGeoPosition();
             await GetInvitations();
+        }
+
+        private async Task UpdateGeoPosition()
+        {
+            var myGeoposition = await (new Geolocator().GetGeopositionAsync());
+            var response = await TillsammensService.UpdatePhotoAndDescAsync(new UserModel
+            {
+                Login = AppSession.Current.CurrentUser.Login,
+                Password = AppSession.Current.CurrentUser.Password,
+                Id = AppSession.Current.CurrentUser.Id,
+                CloseDate = AppSession.Current.CurrentUser.CloseDate,
+                OpenDate = AppSession.Current.CurrentUser.OpenDate,
+                Desc = ProfileDescription,
+                PhotoUri = ProfileUri,
+                LastVisit = DateTime.Now.ToString(),
+                X = myGeoposition.Coordinate.Point.Position.Latitude,
+                Y = myGeoposition.Coordinate.Point.Position.Longitude,
+            });
         }
 
         private async Task GetInvitations()

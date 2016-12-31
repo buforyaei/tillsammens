@@ -27,20 +27,20 @@
             <Pivot.HeaderTemplate>
                 <DataTemplate>
                     <Grid Margin="-5,0,16,0">
-                        <TextBlock Text="{Binding}" FontSize="50" FontWeight="Light" />
+                        <TextBlock Text="{Binding}" FontSize="50" FontWeight="SemiLight" />
                     </Grid>
                 </DataTemplate>
             </Pivot.HeaderTemplate>
             <Pivot.TitleTemplate>
                 <DataTemplate>
                     <Grid>
-                        <TextBlock Text="{Binding}" Style="{StaticResource HeaderTextBlockStyle}" Margin="12,30,0,0" />
+                        <TextBlock Text="{Binding}" FontWeight="Normal" Style="{StaticResource HeaderTextBlockStyle}" Margin="12,30,0,0" />
                     </Grid>
                 </DataTemplate>
             </Pivot.TitleTemplate>
             <Pivot.Background>
                 <ImageBrush 
-                    ImageSource="../Resources/Images/background_02.png" Stretch="UniformToFill"/>
+                    ImageSource="../Resources/Images/background_5.png" Stretch="UniformToFill"/>
             </Pivot.Background>
             
             <!--FRIENDS MODULE -->

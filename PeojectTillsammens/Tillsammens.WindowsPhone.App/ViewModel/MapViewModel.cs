@@ -49,8 +49,8 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
                 Longitude = 18.6685934
             };
 
-            var myGeoPoint = new Geopoint(myBasic);
-            friend.Geopoint = myGeoPoint;
+           
+           
 
             var b = new FriendModel
             {
