@@ -53,6 +53,37 @@
                         ItemsSource="{Binding Friends}"
                         ItemClick="ListViewBase_OnItemClick"
                         IsItemClickEnabled="true" />
+                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <ProgressRing 
+                            Grid.Row="0"
+                            Visibility="{Binding IsWorking,
+                                Converter={StaticResource BooleanToVisibilityConverter}}"
+                            Margin="16"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            IsActive="True"
+                            Foreground="White"/>
+                        <TextBlock 
+                            Grid.Row="1"
+                            Text="Loading..."
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource HeaderTextBlockStyle}"
+                            Visibility="{Binding IsWorking,
+                                Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        <TextBlock 
+                            Grid.Row="0"
+                            Text="No friends"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource HeaderTextBlockStyle}"
+                            Visibility="{Binding NoFriends,
+                                Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    </Grid>
                 </Grid>
             </PivotItem>
             <!--SEARCH MODULE -->
@@ -77,6 +108,7 @@
                         <TextBox 
                             IsSpellCheckEnabled="False"
                             Grid.Column="0"
+                            KeyUp="UIElement_OnKeyUp"
                             Text="{Binding SearchPhrase, Mode=TwoWay}"
                             Style="{StaticResource LightTextBoxStyle}"
                             />
@@ -88,6 +120,38 @@
                             Command="{Binding SearchCmd}">
                         </AppBarButton>
                     </Grid>
+                    <Grid Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <ProgressRing 
+                            Grid.Row="0"
+                            Visibility="{Binding IsSearching,
+                                Converter={StaticResource BooleanToVisibilityConverter}}"
+                            Margin="16"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            IsActive="True"
+                            Foreground="White"/>
+                        <TextBlock 
+                            Grid.Row="1"
+                            Text="Searching..."
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource HeaderTextBlockStyle}"
+                            Visibility="{Binding IsSearching,
+                                Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        <TextBlock 
+                            Grid.Row="1"
+                            Text="No results"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource HeaderTextBlockStyle}"
+                            Visibility="{Binding NoResultSearched,
+                                Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    </Grid>
+                   
                     <ListView 
                         Grid.Row="2"
                         Margin="16,0,16,0" Background="Transparent"
@@ -108,6 +172,8 @@
                 <ScrollViewer Margin="0,16,0,0">
                     <Grid>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
@@ -153,7 +219,8 @@
                                 IsSpellCheckEnabled="False"
                                 Grid.Column="0"
                                 Text="{Binding ProfileUri, Mode=TwoWay}"
-                                Style="{StaticResource LightTextBoxStyle}"/>
+                                Style="{StaticResource LightTextBoxStyle}"
+                                KeyUp="DescriptionUIElement_OnKeyUp"/>
                             <AppBarButton
                                 Icon="accept"
                                 Grid.Column="1"
@@ -175,7 +242,8 @@
                                 IsSpellCheckEnabled="False"
                                 Grid.Column="0"
                                 Text="{Binding ProfileDescription, Mode=TwoWay}"
-                                Style="{StaticResource LightTextBoxStyle}"/>
+                                Style="{StaticResource LightTextBoxStyle}"
+                                KeyUp="DescriptionUIElement_OnKeyUp"/>
                             <AppBarButton
                                 Icon="accept"
                                 Grid.Column="1"
@@ -186,12 +254,26 @@
                         </Grid>
                         <TextBlock 
                             Grid.Row="5"
-                            Text="last update"
+                            Text="last notified"
                             Style="{StaticResource DescriptionTextBlockStyle}"/>
                         <TextBlock 
                             Grid.Row="6"
                             Text="{Binding ProfileLastVisit}"
                             Style="{StaticResource HeaderTextBlockStyle}"/>
+                        <ProgressBar 
+                            Visibility="{Binding IsUpdatingProfile,
+                                Converter={StaticResource BooleanToVisibilityConverter}}"
+                            Margin="16"
+                            IsIndeterminate="True"
+                            Grid.Row="7"/>
+                        <TextBlock 
+                            Grid.Row="8"
+                            Text="Updating..."
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource HeaderTextBlockStyle}"
+                            Visibility="{Binding IsUpdatingProfile,
+                                Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     </Grid>
                 </ScrollViewer>
             </PivotItem>
@@ -207,7 +289,8 @@
                     Command="{Binding GoToSettingsCmd}"/>
                 <AppBarButton 
                     Icon="Refresh" 
-                    Label="refresh"/>
+                    Label="refresh"
+                    Command="{Binding LoadCmd}"/>
             </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

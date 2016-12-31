@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Popups;
+using Windows.UI.Xaml;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
@@ -27,11 +28,15 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
         private string _profileLastVisit;
         private string _searchPhrase;
         private bool _noFriends;
+        private bool _isUpdatingProfile;
+        private bool _isSearching;
+        private bool _noResultsSearched;
 
         public ICommand LoadCmd { get; set; }
         public ICommand RemoveFriendCmd { get; set; }
         public ICommand GoToSettingsCmd { get; set; }
         public ICommand OpenMapCmd { get; set; }
+        public ICommand LogoutCmd { get; set; }
         public ICommand SearchCmd { get; set; }
         public ICommand UpgdareUserDescOrPhotoCmd { get; set; }
         public ICommand InviteToFriendsCmd { get; set; }
@@ -49,6 +54,22 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
         {
             get { return _noFriends; }
             set { Set(ref _noFriends, value); }
+        }
+        public bool IsUpdatingProfile
+        {
+            get { return _isUpdatingProfile; }
+            set { Set(ref _isUpdatingProfile, value); }
+        }
+        
+        public bool NoResultSearched
+        {
+            get { return _noResultsSearched; }
+            set { Set(ref _noResultsSearched, value); }
+        }
+        public bool IsSearching
+        {
+            get { return _isSearching; }
+            set { Set(ref _isSearching, value); }
         }
         public string SearchPhrase
         {
@@ -94,13 +115,33 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
             SearchCmd = new RelayCommand(SearchUsers);
             UpgdareUserDescOrPhotoCmd = new RelayCommand(UpgradeUserDescOrPhoto);
             InviteToFriendsCmd = new RelayCommand<SearchedUser>(InviteToFriends);
+            LogoutCmd = new RelayCommand(Logout);
         }
 
+        private async void Logout()
+        {
+            var messageDialog = new MessageDialog(
+                $"Are you sure you want to logout and quit?", "Logout");
+            var yesBtn = new UICommand("Yes")
+            {
+                Invoked = command =>
+                {
+                    ViewModelLocator.Cleanup();
+                    Application.Current.Exit();
+                }
+            };
+            var noBtn = new UICommand("No");
+            messageDialog.Commands.Add(yesBtn);
+            messageDialog.Commands.Add(noBtn);
+            await messageDialog.ShowAsync();
+        }
+
+    
         private async void YesButtonClick(IUICommand command)
         {
             if (_globalSearchedId != 0)
             {
-                if (Friends.Any(f => f.Id == _globalSearchedId))
+                if (Friends != null && Friends.Any(f => f.Id == _globalSearchedId))
                 {
                     await DialogService.ShowMessageBox("You are already friends!", string.Empty);
                     return;
@@ -139,6 +180,7 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
         }
         private async void UpgradeUserDescOrPhoto()
         {
+            IsUpdatingProfile = true;
             var response = await TillsammensService.UpdatePhotoAndDescAsync(new UserModel
             {
                 Login = AppSession.Current.CurrentUser.Login,
@@ -156,29 +198,48 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
             {
                 AppSession.Current.CurrentUser.Desc = ProfileDescription;
                 AppSession.Current.CurrentUser.PhotoUri = ProfileUri;
+                IsUpdatingProfile = false;
                 await DialogService.ShowMessageBox("Profile was updated!", string.Empty);
             }
             else
             {
                 ProfileDescription = AppSession.Current.CurrentUser.Desc;
                 ProfileUri = AppSession.Current.CurrentUser.PhotoUri;
+                IsUpdatingProfile = false;
                 ShowWebResultCommunicate(response.WebServiceStatus);
             } 
+            
         }
 
         private async void SearchUsers()
         {
-            SearchedUsers = null;
             if (string.IsNullOrEmpty(SearchPhrase)) return;
+            SearchedUsers = null;
+            NoResultSearched = false;
+            IsSearching = true;
             var searched = await TillsammensService.SearchFriendsAsync(SearchPhrase);
             if (searched.WebServiceStatus == WebServiceStatus.Success)
             {
                 if (searched.Result != null && searched.Result.Any())
                 {
-                    SearchedUsers = searched.Result;
-                    return;
-                } 
+                    var searchedWithoutMe = searched.Result
+                        .Where(friend => friend.Login != AppSession.Current.CurrentUser.Login)
+                        .OrderBy(friend => friend.Login)
+                        .ToList();
+                        
+                    if (searchedWithoutMe.Any())
+                    {
+                        SearchedUsers = searchedWithoutMe;
+                        IsSearching = false;
+                        return;
+                    }
+                }
+                IsSearching = false;
+                NoResultSearched = true;
+                return;
+
             }
+            IsSearching = false;
             ShowWebResultCommunicate(searched.WebServiceStatus);
         }
 
@@ -205,8 +266,6 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
                     (AppSession.Current.CurrentUser.Id);
             if (invitations.WebServiceStatus != WebServiceStatus.Success)
             {
-                IsWorking = false;
-                ShowWebResultCommunicate(invitations.WebServiceStatus);
                 return;
             }
             if (invitations.Result != null && invitations.Result.Any())
@@ -252,6 +311,7 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
         {
             NoFriends = false;
             Friends = null;
+            IsWorking = true;
             var friends = await TillsammensService.GetFriendsAsync(
                 AppSession.Current.CurrentUser.Id);
             if (friends.WebServiceStatus != WebServiceStatus.Success)
@@ -262,11 +322,13 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
             }
             if (friends.Result == null || !friends.Result.Any())
             {
+                IsWorking = false;
                 NoFriends = true;
             }
             else
             {
-                Friends = friends.Result;
+                IsWorking = false;
+                Friends = friends.Result.OrderBy(friend => friend.LastVisit);
             }
         }
 

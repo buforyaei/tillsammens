@@ -26,6 +26,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -41,7 +42,11 @@
                 Grid.Row="4"
                 Text="login" 
                 Style ="{StaticResource DescriptionTextBlockStyle}"/>
-            <TextBox Grid.Row="5" Name="Login" IsSpellCheckEnabled="False"
+            <TextBox 
+                Grid.Row="5"
+                Name="Login" 
+                IsSpellCheckEnabled="False"
+                KeyUp="LoginUIElement_OnKeyUp"
                 Style ="{StaticResource LightTextBoxStyle}"/>
             <TextBlock 
                 Grid.Row="6"
@@ -49,14 +54,31 @@
                 Style ="{StaticResource DescriptionTextBlockStyle}"/>
             <PasswordBox 
                 Grid.Row="7" Name="PasswordBoxFirst"
+                KeyUp="PasswordBoxFirst_OnKeyUp"
                 Style ="{StaticResource LightPasswordBoxStyle}"/>
             <TextBlock 
                 Grid.Row="8"
                 Text="confirm password" 
                 Style ="{StaticResource DescriptionTextBlockStyle}"/>
             <PasswordBox 
+                KeyUp="PasswordBoxSecond_OnKeyUp"
                 Grid.Row="9" Name="PasswordBoxSecond"
                 Style ="{StaticResource LightPasswordBoxStyle}"/>
+            <StackPanel Grid.Row="10">
+                <ProgressRing 
+                    IsActive="True"
+                    Foreground="White"
+                    Margin="16"
+                    Visibility="{Binding IsWorking, 
+                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                <TextBlock 
+                    Style="{StaticResource HeaderTextBlockStyle}"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Text="Loading..."
+                    Visibility="{Binding IsWorking, 
+                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            </StackPanel>
         </Grid>
     </Grid>
     <Page.BottomAppBar>

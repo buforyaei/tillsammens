@@ -35,7 +35,8 @@
                        Grid.Column="0"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       Style="{StaticResource BigHeaderTextBlockStyle}"/>
+                       Style="{StaticResource BigHeaderTextBlockStyle}"
+                       Margin="0"/>
             <Ellipse Height="80"  Width="80" Grid.Column="0">
                 <Ellipse.Fill>
                     <ImageBrush Stretch="UniformToFill" ImageSource="{Binding PhotoUri}"/>
@@ -69,14 +70,14 @@
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-
+           
             <Ellipse Height="50"  Width="50">
                 <Ellipse.Fill>
                     <ImageBrush Stretch="UniformToFill" ImageSource="{Binding PhotoUri}"/>
                 </Ellipse.Fill>
             </Ellipse>
             <Border Grid.Column="1" Background="Black"  Opacity="0.8" Margin="8,8,0,8" HorizontalAlignment="Stretch">
-                <TextBlock Text="{Binding Login}"  HorizontalAlignment="Stretch" Foreground="White" FontSize="24" VerticalAlignment="Stretch" Margin="6,2,2,2" />
+                <TextBlock Text="{Binding Login}"  HorizontalAlignment="Center" Foreground="White" FontSize="24" VerticalAlignment="Stretch" Margin="6,2,2,2" />
             </Border>
         </Grid>
     </DataTemplate>
@@ -90,6 +91,14 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            <Ellipse Height="80"  Width="80" Grid.Row="0" Fill="{Binding Converter={StaticResource RandomBrushConverter}}"/>
+            <TextBlock Text="{Binding Login, 
+                    Converter={StaticResource LoginToLetterConverter}}"
+                       Grid.Row="0"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Style="{StaticResource BigHeaderTextBlockStyle}"
+                       Margin="0"/>
             <Ellipse 
                 Height="80"  
                 Width="80"
@@ -110,12 +119,11 @@
                 Margin="6,2,6,0" >
                 <TextBlock 
                     Text="{Binding Login}" 
-                    VerticalAlignment="Stretch"     
-                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Center"     
+                    HorizontalAlignment="Center" 
                     Foreground="White"  
-                    FontWeight="SemiLight"
                     FontSize="16"
-                    Margin="3,2,3,1" />
+                    Margin="2" />
             </Border>
         </Grid>
     </DataTemplate>

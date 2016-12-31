@@ -4,18 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d"
     RequestedTheme="Dark"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding Login, Source={StaticResource Locator}}">
-    
-    <!--<interactivity:Interaction.Behaviors>
-        <core:EventTriggerBehavior EventName="Loaded">
-            <core:InvokeCommandAction Command="{Binding LoadCmd}" />
-        </core:EventTriggerBehavior>
-    </interactivity:Interaction.Behaviors>-->
 
     <Grid>
         <Image
@@ -32,12 +24,21 @@
                 Grid.Row="0"
                 Text="TILLSAMMENS" 
                 Style ="{StaticResource BigHeaderTextBlockStyle}"/>
-            <ProgressRing 
-                    Grid.Row="1" 
+            <StackPanel Grid.Row="1">
+                <ProgressRing 
                     IsActive="True"
                     Foreground="White"
+                    Margin="16"
                     Visibility="{Binding IsWorking, 
                         Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                <TextBlock 
+                    Style="{StaticResource HeaderTextBlockStyle}"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Text="Loading..."
+                    Visibility="{Binding IsWorking, 
+                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            </StackPanel>
             <Grid Grid.Row="1" Visibility="{Binding IsWorking, Converter={StaticResource BooleanToOppositeVisibilityConverter}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>

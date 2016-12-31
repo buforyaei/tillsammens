@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -43,7 +44,7 @@ namespace Tillsammens.WindowsPhone.App.Pages
         }
         private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
         {
-            ViewModel.GoBack();
+            ViewModel.LogoutCmd.Execute(null);
             e.Handled = true;
         }
 
@@ -55,6 +56,16 @@ namespace Tillsammens.WindowsPhone.App.Pages
         private void SearchListView_OnItemClick(object sender, ItemClickEventArgs e)
         {
             ViewModel.InviteToFriendsCmd.Execute(e.ClickedItem);
+        }
+
+        private void UIElement_OnKeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter) ViewModel.SearchCmd.Execute(null);
+        }
+
+        private void DescriptionUIElement_OnKeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter) ViewModel.UpgdareUserDescOrPhotoCmd.Execute(null);
         }
     }
 }

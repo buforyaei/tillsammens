@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using Ninject;
+using Tillsammens.WindowsPhone.Domain.Services;
 
 namespace Tillsammens.WindowsPhone.App.ViewModel
 {
@@ -53,7 +54,7 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
         }
         public static void Cleanup()
         {
-            // TODO Clear the ViewModels
+            AppSession.Current.CurrentUser = null;
         }
 
         public static T GetInstance<T>()
