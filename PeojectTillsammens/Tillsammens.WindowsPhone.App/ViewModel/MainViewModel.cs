@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using Windows.UI.Xaml;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
+using Ninject.Infrastructure.Language;
 using Tillsammens.WindowsPhone.Domain.Model;
 using Tillsammens.WindowsPhone.Domain.Services;
 using Tillsammens.WindowsPhone.Domain.Services.Interfaces;
@@ -21,7 +23,7 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
     public class MainViewModel : TillsammensViewModelBase
     {
         private readonly INavigationService _navigationService;
-        private IEnumerable<FriendModel> _friends;
+        private ObservableCollection<FriendModel> _friends;
         private IEnumerable<SearchedUser> _searchedUsers;
         private string _profileUri;
         private string _profileLogin;
@@ -32,6 +34,7 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
         private bool _isUpdatingProfile;
         private bool _isSearching;
         private bool _noResultsSearched;
+        private Invitation _globalCurrentInvitation;
 
         public ICommand LoadCmd { get; set; }
         public ICommand RemoveFriendCmd { get; set; }
@@ -97,7 +100,7 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
             get { return _profileLastVisit; }
             set { Set(ref _profileLastVisit, value); }
         }
-        public IEnumerable<FriendModel> Friends
+        public ObservableCollection<FriendModel> Friends
         {
             get { return _friends; }
             set { Set(ref _friends, value); }
@@ -111,7 +114,7 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
         {
             LoadCmd = new RelayCommand(Load);
             GoToSettingsCmd = new RelayCommand(GoToSettings);
-            RemoveFriendCmd = new RelayCommand(RemoveFriend);
+            RemoveFriendCmd = new RelayCommand<FriendModel>(RemoveFriend);
             OpenMapCmd = new RelayCommand<FriendModel>(OpenMap);
             SearchCmd = new RelayCommand(SearchUsers);
             UpgdareUserDescOrPhotoCmd = new RelayCommand(UpgradeUserDescOrPhoto);
@@ -152,7 +155,8 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
                     {
                         RecieverId = _globalSearchedId,
                         SenderId = AppSession.Current.CurrentUser.Id,
-                        Status = "Confirmable"
+                        Status = "Confirmable",
+                        SenderLogin = AppSession.Current.CurrentUser.Login
                     });
                 if (result.WebServiceStatus == WebServiceStatus.Success)
                 {
@@ -184,16 +188,9 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
             IsUpdatingProfile = true;
             var response = await TillsammensService.UpdatePhotoAndDescAsync(new UserModel
             {
-                Login = AppSession.Current.CurrentUser.Login,
-                Password = AppSession.Current.CurrentUser.Password,
                 Id = AppSession.Current.CurrentUser.Id,
-                CloseDate = AppSession.Current.CurrentUser.CloseDate,
-                OpenDate = AppSession.Current.CurrentUser.OpenDate,
                 Desc = ProfileDescription,
                 PhotoUri = ProfileUri,
-                LastVisit = DateTime.Now.ToString(),
-                X = AppSession.Current.CurrentUser.X,
-                Y = AppSession.Current.CurrentUser.X,
             });
             if (response.WebServiceStatus == WebServiceStatus.Success)
             {
@@ -244,13 +241,37 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
             ShowWebResultCommunicate(searched.WebServiceStatus);
         }
 
-        private void RemoveFriend()
+        private async void RemoveFriend(FriendModel friend)
         {
+            var result = await TillsammensService.GetInvitationAsync
+                (AppSession.Current.CurrentUser.Id, friend.Id);
+            if (result.WebServiceStatus != WebServiceStatus.Success)
+            {
+                ShowWebResultCommunicate(result.WebServiceStatus);
+                return;
+            }
+            if (result.Result != null)
+            {
+                var deleteResult = await TillsammensService.DeleteFromFriendsAsync(result.Result.Id);
+                if (deleteResult.WebServiceStatus != WebServiceStatus.Success)
+                {
+                    ShowWebResultCommunicate(deleteResult.WebServiceStatus);
+                    return;
+                }
+                IsWorking = false;
+                await new MessageDialog("Friend was successfully removed.", "Delete friend").ShowAsync();
+                await InitializeFriendsList();
+            }
+            
 
         }
+
         private void OpenMap(FriendModel friend)
         {
-            _navigationService.NavigateTo("Map", friend);
+            if (AppSession.Current.FriendsList != null && AppSession.Current.FriendsList.Any())
+            {
+                _navigationService.NavigateTo("Map", friend);
+            }
         }
 
         private async void Load()
@@ -263,17 +284,11 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
 
         private async Task UpdateGeoPosition()
         {
-            var myGeoposition = await (new Geolocator().GetGeopositionAsync());
-            var response = await TillsammensService.UpdatePhotoAndDescAsync(new UserModel
+            var myGeoposition = await new Geolocator().GetGeopositionAsync();
+            var response = await TillsammensService.UpdateGpsAsync(new UserModel
             {
-                Login = AppSession.Current.CurrentUser.Login,
-                Password = AppSession.Current.CurrentUser.Password,
                 Id = AppSession.Current.CurrentUser.Id,
-                CloseDate = AppSession.Current.CurrentUser.CloseDate,
-                OpenDate = AppSession.Current.CurrentUser.OpenDate,
-                Desc = ProfileDescription,
-                PhotoUri = ProfileUri,
-                LastVisit = DateTime.Now.ToString(),
+                LastVisit = DateTime.Now,
                 X = myGeoposition.Coordinate.Point.Position.Latitude,
                 Y = myGeoposition.Coordinate.Point.Position.Longitude,
             });
@@ -291,20 +306,25 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
             if (invitations.Result != null && invitations.Result.Any())
             {
                 await ShowInvitations(invitations.Result);
+                return;
             }
+
         }
 
         private async void AcceptButtonClick(IUICommand command)
-        {
-            //post invitation change status
+        { 
+            _globalCurrentInvitation.Status = "Accepted";
+            await TillsammensService.UpdateInvitationsAsync(_globalCurrentInvitation);
         }
         private async void RejectButtonClick(IUICommand command)
         {
-            //post invitation change status
+            
+            _globalCurrentInvitation.Status = "Rejected";
+            await TillsammensService.UpdateInvitationsAsync(_globalCurrentInvitation);
         }
         private async Task ShowInvitations(IEnumerable<Invitation> invitations)
         {
-            var messageDialog = new MessageDialog(String.Empty,String.Empty);
+            var messageDialog = new MessageDialog(String.Empty,"Invitation");
             var yesBtn = new UICommand("Accept")
             {
                 Invoked = AcceptButtonClick
@@ -317,13 +337,11 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
             messageDialog.Commands.Add(noBtn);
             foreach (var i in invitations)
             {
-                if (i.Status == "Confirmable")
+                if (i.Status.Contains("Confirmable"))
                 {
-                    //get user with senderId
-
-                    messageDialog.Content = string.Format(
-                        $"{0} wants to add you to friends list.", i.SenderId);
-                    await messageDialog.ShowAsync();
+                    messageDialog.Content = $"{i.SenderLogin} wants to add you to friends list.";
+                    _globalCurrentInvitation = i;
+                    await messageDialog.ShowAsync(); 
                 }
             }
         }
@@ -348,7 +366,9 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
             else
             {
                 IsWorking = false;
-                Friends = friends.Result.OrderBy(friend => friend.LastVisit);
+                Friends = new ObservableCollection<FriendModel>(
+                    friends.Result.OrderBy(friend => friend.LastVisit));
+                AppSession.Current.FriendsList = Friends.ToList();
             }
         }
 
@@ -359,7 +379,7 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
                 ProfileLogin = AppSession.Current.CurrentUser.Login;
                 ProfileDescription = AppSession.Current.CurrentUser.Desc;
                 ProfileUri = AppSession.Current.CurrentUser.PhotoUri;
-                ProfileLastVisit = DateTime.Parse(AppSession.Current.CurrentUser.LastVisit).ToString("U");
+                ProfileLastVisit = AppSession.Current.CurrentUser.LastVisit.ToString("g");
             }
         }
 

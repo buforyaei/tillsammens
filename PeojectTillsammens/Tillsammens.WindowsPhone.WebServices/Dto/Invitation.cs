@@ -12,5 +12,6 @@ namespace Tillsammens.WindowsPhone.WebServices.Dto
         public int RecieverId { get; set; }
         public int SenderId { get; set; }
         public string Status { get; set; }
+        public string SenderLogin { get; set; }
     }
 }

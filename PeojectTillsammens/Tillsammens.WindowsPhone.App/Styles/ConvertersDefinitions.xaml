@@ -10,5 +10,5 @@
     <converters1:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <converters1:LoginToLetterConverter x:Key="LoginToLetterConverter" />
     <converters1:RandomBrushConverter x:Key="RandomBrushConverter" />
-    
+    <converters1:DateTimeToShortFormatConverter x:Key="DateTimeToShortFormatConverter"/>
    </ResourceDictionary>

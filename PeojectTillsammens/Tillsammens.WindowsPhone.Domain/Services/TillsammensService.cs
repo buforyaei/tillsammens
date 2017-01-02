@@ -54,5 +54,23 @@ namespace Tillsammens.WindowsPhone.Domain.Services
         {
             return await GetWebServiceData(() => _tillsammensWebService.UpdatePhotoAndDesc(user));
         }
+
+        public async Task<WebResult<UserModel>> UpdateGpsAsync(UserModel user)
+        {
+            return await GetWebServiceData(() => _tillsammensWebService.UpdateGps(user));
+        }
+
+        public async Task<WebResult<Invitation>> UpdateInvitationsAsync(Invitation invitation)
+        {
+            return await GetWebServiceData(() => _tillsammensWebService.UpdateInvitation(invitation));
+        }
+        public async Task<WebResult<Invitation>> GetInvitationAsync(int userId, int friendId)
+        {
+            return await GetWebServiceData(() => _tillsammensWebService.GetInvitation(userId,friendId));
+        }
+        public async Task<WebResult<Invitation>> DeleteFromFriendsAsync(int invitationId)
+        {
+            return await GetWebServiceData(() => _tillsammensWebService.DeleteFromFriends(invitationId));
+        }
     }
 }

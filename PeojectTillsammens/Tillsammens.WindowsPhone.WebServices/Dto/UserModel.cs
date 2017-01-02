@@ -13,12 +13,12 @@ namespace Tillsammens.WindowsPhone.WebServices.Dto
         public string Login { get; set; }
         public string Password { get; set; }
         public string PhotoUri { get; set; }
-        public string LastVisit { get; set; }
+        public DateTime LastVisit { get; set; }
         public double X { get; set; }
         public double Y { get; set; }
         public string Desc { get; set; }
-        public string OpenDate { get; set; }
-        public string CloseDate { get; set; }
+        public DateTime OpenDate { get; set; }
+        public DateTime CloseDate { get; set; }
        
     }
 }

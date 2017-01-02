@@ -22,5 +22,13 @@ namespace Tillsammens.WindowsPhone.WebServices.Services.Interfaces
         Task<UserModel> UpdatePhotoAndDesc(UserModel user);
 
         Task<Invitation> SendInvitation(Invitation invitation);
+
+        Task<UserModel> UpdateGps(UserModel user);
+
+        Task<Invitation> UpdateInvitation(Invitation invitation);
+
+        Task<Invitation> GetInvitation(int userId, int friendId);
+
+        Task<Invitation> DeleteFromFriends(int invitationId);
     }
 }

@@ -45,14 +45,21 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
             {
                 IsWorking = false;
                 await DialogService.ShowMessageBox(
-                    "Fields can not be empty!", String.Empty);
+                    "Fields can not be empty!", "Error");
+                return;
+            }
+            if (credentials[0].Length > 25)
+            {
+                IsWorking = false;
+                await DialogService.ShowMessageBox(
+                    "Login is too long!", "Error");
                 return;
             }
             if(credentials[1] != credentials[2])
             {
                 IsWorking = false;
                 await DialogService.ShowMessageBox(
-                    "Passwords must not be different!", String.Empty);
+                    "Passwords must not be different!", "Error");
                 return;
             }
             var user = await TillsammensService.CreateAccountAsync(
@@ -60,10 +67,10 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
                 {
                     Login = credentials[0],
                     Password = credentials[1],
-                    CloseDate = DateTime.MaxValue.ToString(),
-                    OpenDate = DateTime.Now.ToString(),
+                    CloseDate = DateTime.MaxValue,
+                    OpenDate = DateTime.Now,
                     Desc = "Hey there I'm using tillsamens!",
-                    LastVisit = DateTime.Now.ToString(),
+                    LastVisit = DateTime.Now,
                     PhotoUri = String.Empty,
                     X = 0,
                     Y = 0,

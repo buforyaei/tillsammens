@@ -55,7 +55,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="{Binding Login}" HorizontalAlignment="Left" Foreground="White"  FontSize="20" Margin="6,2,2,2" />
-                        <TextBlock Grid.Column="1" Text="{Binding LastVisit}" HorizontalAlignment="Right" Foreground="White" FontSize="16"  Margin="2,2,6,2"/>        
+                        <TextBlock Grid.Column="1" Text="{Binding LastVisit, Converter={StaticResource DateTimeToShortFormatConverter}}" HorizontalAlignment="Right" Foreground="White" FontSize="16"  Margin="2,2,6,2"/>        
                     </Grid>
                     <TextBlock Grid.Row="1" Text="{Binding Desc}" TextWrapping="Wrap"   Foreground="White" FontSize="16" Margin="6,0,6,2"  HorizontalAlignment="Stretch"/>
            

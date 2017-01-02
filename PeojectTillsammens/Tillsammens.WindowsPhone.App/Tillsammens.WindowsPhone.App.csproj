@@ -99,6 +99,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Converters\BooleanToOppositeVisibilityConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\DateTimeToShortFormatConverter.cs" />
     <Compile Include="Converters\LoginToLetterConverter.cs" />
     <Compile Include="Converters\RandomBrushConverter.cs" />
     <Compile Include="Messages\ShowTopProgressBarMessage.cs" />

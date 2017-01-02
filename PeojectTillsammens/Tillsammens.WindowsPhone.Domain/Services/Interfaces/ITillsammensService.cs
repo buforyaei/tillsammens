@@ -23,5 +23,13 @@ namespace Tillsammens.WindowsPhone.Domain.Services.Interfaces
         Task<WebResult<UserModel>> UpdatePhotoAndDescAsync(UserModel user);
 
         Task<WebResult<Invitation>> SendInvitationAsync(Invitation invitation);
+
+        Task<WebResult<UserModel>> UpdateGpsAsync(UserModel user);
+
+        Task<WebResult<Invitation>> UpdateInvitationsAsync(Invitation invitation);
+
+        Task<WebResult<Invitation>> GetInvitationAsync(int userId, int friendId);
+
+        Task<WebResult<Invitation>> DeleteFromFriendsAsync(int invitationId);
     }
 }

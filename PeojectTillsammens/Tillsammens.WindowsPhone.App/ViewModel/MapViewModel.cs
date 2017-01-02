@@ -9,6 +9,7 @@ using Windows.Devices.Geolocation;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
+using Tillsammens.WindowsPhone.Domain.Services;
 using Tillsammens.WindowsPhone.WebServices.Dto;
 
 namespace Tillsammens.WindowsPhone.App.ViewModel
@@ -16,7 +17,7 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
     public class MapViewModel : ViewModelBase
     {
         private readonly INavigationService _navigationService;
-        private ObservableCollection<FriendModel> _friend;
+        private ObservableCollection<FriendModel> _friends;
         private Geopoint _location;
         public ICommand LoadCmd { get; set; }
 
@@ -25,10 +26,10 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
             _navigationService = navigationService;
             InitializeCommands();
         }
-        public ObservableCollection<FriendModel> Friend
+        public ObservableCollection<FriendModel> Friends
         {
-            get { return _friend; }
-            set { Set(ref _friend, value); }
+            get { return _friends; }
+            set { Set(ref _friends, value); }
         }
         public Geopoint Location
         {
@@ -42,38 +43,27 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
 
         private void Load(FriendModel friend)
         {
-            var myBasic = new BasicGeoposition
+            var friends = new ObservableCollection<FriendModel>();
+            foreach (var f in AppSession.Current.FriendsList)
             {
-                Altitude = 0,
-                Latitude = 50.2915127,
-                Longitude = 18.6685934
-            };
+                f.Geopoint = new Geopoint
+                    (new BasicGeoposition
+                    {
+                        Latitude = f.X,
+                        Longitude = f.Y,
+                        Altitude = 0
+                    });
 
-           
-           
-
-            var b = new FriendModel
-            {
-                Id = 2,
-                Desc = "Dear friends, send me your invitations :))",
-                LastVisit = DateTime.Now.Date.ToString("t"),
-                Login = "Grażynka",
-                PhotoUri =
-                  "http://hbz.h-cdn.co/assets/16/10/980x490/landscape-1457457820-hbz-april-2016-jennifer-aniston-a-list-00-index.jpg",
-                X = "50.059992",
-                Y = "19.8517511",
-                Geopoint = new Geopoint(new BasicGeoposition
+                if (f.X != 0 && f.Y != 0)
                 {
-                    Altitude = 0,
-                    Latitude = 50.2815127,
-                    Longitude = 18.6285934
-                })
-            };
-            Friend = new ObservableCollection<FriendModel>();
-            Friend.Add(friend);
-            Friend.Add(b);
-
-
+                    if (f.Login != friend.Login)
+                    {
+                        friends.Add(f);
+                    }
+                    else friends.Insert(0, f);
+                }
+            }
+            Friends = friends;
         }
 
         public void GoBack()

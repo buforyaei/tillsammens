@@ -27,6 +27,14 @@ namespace Tillsammens.WindowsPhone.WebServices.Services
             }
             catch (Exception ex)
             {
+                if (ex.Message.Contains("Unauthorized"))
+                {
+                    throw new WebServiceException(ex, WebErrorStatus.Unauthorized);
+                }
+                if (ex.Message.Contains("InternalServerError"))
+                {
+                    throw new WebServiceException(ex, WebErrorStatus.InternalServerError);
+                }
                 throw new WebServiceException(ex, WebErrorStatus.HostNameNotResolved);
             }
             if (!response.IsSuccess &&

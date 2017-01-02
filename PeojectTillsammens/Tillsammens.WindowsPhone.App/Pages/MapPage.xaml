@@ -21,10 +21,10 @@
     <Grid>
         <maps:MapControl 
             ZoomLevel="12" 
-            Center="{Binding Friend[0].Geopoint}">
+            Center="{Binding Friends[0].Geopoint}">
             <maps:MapItemsControl
                  
-                ItemsSource="{Binding Friend}"
+                ItemsSource="{Binding Friends}"
                 ItemTemplate="{StaticResource MapItemTemplate}"/>
         </maps:MapControl>
     </Grid>

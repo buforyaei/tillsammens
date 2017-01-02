@@ -11,64 +11,33 @@
 
     <DataTemplate x:Key="MapItemTemplate">
         <StackPanel maps:MapControl.Location="{Binding Geopoint}" Margin="-45,-45,0,0">
-            <Ellipse Height="80"  Width="80">
-                <Ellipse.Fill>
-                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding PhotoUri}"/>
-                </Ellipse.Fill>
-            </Ellipse>
-            <TextBlock 
-                Text="{Binding Login}" 
-                Foreground="DimGray"
-                FontSize="25"
-                HorizontalAlignment="Center"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition  Height="Auto"/>
+                    <RowDefinition  Height="*"/>
+                </Grid.RowDefinitions>
+                <Ellipse Height="80"  Width="80" Grid.Row="0" Fill="{Binding Converter={StaticResource RandomBrushConverter}}"/>
+                <TextBlock 
+                    Text="{Binding Login, 
+                        Converter={StaticResource LoginToLetterConverter}}"
+                    Grid.Row="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource BigHeaderTextBlockStyle}"
+                    Margin="0"/>
+                <Ellipse Height="80"  Width="80" Grid.Row="0">
+                    <Ellipse.Fill>
+                        <ImageBrush Stretch="UniformToFill" ImageSource="{Binding PhotoUri}"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <TextBlock 
+                    Grid.Row="1"
+                    Text="{Binding Login}" 
+                    Foreground="DimGray"
+                    FontSize="25"
+                    HorizontalAlignment="Center"/>
+            </Grid>
         </StackPanel>
-    </DataTemplate>
-    <DataTemplate x:Key="ItemTemplate">
-        <Grid  MinHeight="4" Margin="0,0,0,4">
-            <interactivity:Interaction.Behaviors>
-                <core:EventTriggerBehavior EventName="Holding">
-                    <utils:OpenListItemMenuFlyoutAction/>
-                </core:EventTriggerBehavior>
-            </interactivity:Interaction.Behaviors>
-            <FlyoutBase.AttachedFlyout>
-                <MenuFlyout>
-                    <MenuFlyoutItem
-                        Text="remove"
-                        Command="{Binding Main.RemoveFriendCmd,
-                            Source={StaticResource Locator}}"
-                        CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-                </MenuFlyout>
-            </FlyoutBase.AttachedFlyout>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Ellipse Height="80"  Width="80">
-                <Ellipse.Fill>
-                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding PhotoUri}"/>
-                </Ellipse.Fill>
-            </Ellipse>
-            <Border Grid.Column="1" Background="Black"  Opacity="0.6" Margin="8,8,0,8" HorizontalAlignment="Stretch">
-                <Grid  HorizontalAlignment="Stretch">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <Grid Grid.Row="0"  HorizontalAlignment="Stretch">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition  Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding Login}" HorizontalAlignment="Left" Foreground="White"  FontSize="20" Margin="6,2,2,2" />
-                        <TextBlock Grid.Column="1" Text="{Binding LastVisit}" HorizontalAlignment="Right" Foreground="White" FontSize="16"  Margin="2,2,6,2"/>
-                    </Grid>
-                    <TextBlock Grid.Row="1" Text="{Binding Desc}" TextWrapping="Wrap"   Foreground="White" FontSize="16" Margin="6,0,6,2"  HorizontalAlignment="Stretch"/>
-
-                </Grid>
-            </Border>
-        </Grid>
     </DataTemplate>
 </ResourceDictionary>
 

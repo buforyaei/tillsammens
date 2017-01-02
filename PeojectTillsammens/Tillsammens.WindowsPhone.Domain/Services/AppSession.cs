@@ -20,6 +20,8 @@ namespace Tillsammens.WindowsPhone.Domain.Services
 
         public UserModel CurrentUser { get; set; }
 
+        public List<FriendModel> FriendsList { get; set; }
+
         public void Cleanup()
         {
             CurrentUser = null;
