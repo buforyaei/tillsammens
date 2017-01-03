@@ -44,7 +44,7 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
             {
                 IsWorking = false;
                 await DialogService.ShowMessageBox(
-                    "Fields can not be empty!", string.Empty);
+                    "Fields can not be empty.", string.Empty);
                 return;
             }
             var user = await TillsammensService.LoginAsync(credentials[0], credentials[1]);

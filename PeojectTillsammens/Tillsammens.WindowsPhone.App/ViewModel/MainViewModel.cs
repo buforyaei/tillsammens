@@ -147,7 +147,7 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
             {
                 if (Friends != null && Friends.Any(f => f.Id == _globalSearchedId))
                 {
-                    await DialogService.ShowMessageBox("You are already friends!", string.Empty);
+                    await DialogService.ShowMessageBox("You are already friends.", string.Empty);
                     return;
                 }
                 var result = await TillsammensService.SendInvitationAsync(
@@ -197,7 +197,7 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
                 AppSession.Current.CurrentUser.Desc = ProfileDescription;
                 AppSession.Current.CurrentUser.PhotoUri = ProfileUri;
                 IsUpdatingProfile = false;
-                await DialogService.ShowMessageBox("Profile was updated!", string.Empty);
+                await DialogService.ShowMessageBox("Profile was updated.", string.Empty);
             }
             else
             {

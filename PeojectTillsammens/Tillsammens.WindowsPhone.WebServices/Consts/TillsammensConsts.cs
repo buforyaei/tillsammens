@@ -8,7 +8,7 @@ namespace Tillsammens.WindowsPhone.WebServices.Consts
 {
     class TillsammensConsts
     {
-       public static string BaseAddress = "http://project18api.azurewebsites.net";
+        public static string BaseAddress = "http://project18api.azurewebsites.net";
         //public static string BaseAddress = "http://localhost:57230/"; 
         public static string UsersApi = "/api/users/";
         public static string InvitationsApi = "/api/invitations/";
@@ -18,6 +18,9 @@ namespace Tillsammens.WindowsPhone.WebServices.Consts
         public static string FreindsApi = "/api/friends/";
         public static string UpdateDescPhotoApi = "/api/updatedescphoto/";
         public static string UpdateGpsApi = "/api/updategps/";
+        public static string RemoveAccountApi = "/api/removeaccount/";
+        public static string ChangePassword = "/api/changepassword/";
+
 
 
     }

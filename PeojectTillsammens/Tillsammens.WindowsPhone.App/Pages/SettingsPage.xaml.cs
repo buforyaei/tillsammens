@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -44,6 +45,42 @@ namespace Tillsammens.WindowsPhone.App.Pages
         {
             ViewModel.GoBack();
             e.Handled = true;
+        }
+
+        private void NewPasswordSecond_OnKeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter || e.Key == VirtualKey.Tab)
+            {
+                ViewModel.ChangePasswordCmd.Execute(new [] 
+                    {OldPassword.Password, NewPassword.Password, NewPasswordSecond.Password});
+                NewPassword.Password = string.Empty;
+                NewPasswordSecond.Password = string.Empty;
+                OldPassword.Password = string.Empty;
+            }
+        }
+
+        private void NewPassword_OnKeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter || e.Key == VirtualKey.Tab) NewPasswordSecond.Focus(FocusState.Keyboard);
+        }
+
+        private void OldPassword_OnKeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter || e.Key == VirtualKey.Tab) NewPassword.Focus(FocusState.Keyboard);
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ChangePasswordCmd.Execute(new[]
+                 {OldPassword.Password, NewPassword.Password, NewPasswordSecond.Password});
+            NewPassword.Password = string.Empty;
+            NewPasswordSecond.Password = string.Empty;
+            OldPassword.Password = string.Empty;
+        }
+
+        private void ChangePasswordButton_OnClick(object sender, RoutedEventArgs e)
+        {
+           ViewModel.ChangePasswordsVisCmd.Execute(null);
         }
     }
 }

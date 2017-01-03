@@ -39,6 +39,8 @@ namespace Tillsammens.WindowsPhone.App.Pages
         {
             base.OnNavigatedTo(e);
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;
+            LoginBox.Text = string.Empty;
+            PasswordBox.Password = string.Empty;
             if (e.Parameter is bool && (bool)e.Parameter)
             {
                 Application.Current.Exit();
@@ -52,6 +54,7 @@ namespace Tillsammens.WindowsPhone.App.Pages
         {
             base.OnNavigatingFrom(e);
             HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
+           
         }
         private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
         {

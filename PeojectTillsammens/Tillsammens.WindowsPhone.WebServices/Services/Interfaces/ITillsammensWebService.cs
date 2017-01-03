@@ -30,5 +30,10 @@ namespace Tillsammens.WindowsPhone.WebServices.Services.Interfaces
         Task<Invitation> GetInvitation(int userId, int friendId);
 
         Task<Invitation> DeleteFromFriends(int invitationId);
+
+        Task<bool> DeleteAccount(int id);
+
+        Task<UserModel> ChangePassword(UserModel user);
+
     }
 }

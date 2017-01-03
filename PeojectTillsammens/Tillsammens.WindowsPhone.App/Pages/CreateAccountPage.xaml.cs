@@ -48,6 +48,9 @@ namespace Tillsammens.WindowsPhone.App.Pages
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             ViewModel.CreateAccountCmd.Execute(new [] {Login.Text, PasswordBoxFirst.Password, PasswordBoxSecond.Password});
+            PasswordBoxFirst.Password = string.Empty;
+            PasswordBoxSecond.Password = string.Empty;
+            Login.Text = string.Empty;
         }
 
         private void LoginUIElement_OnKeyUp(object sender, KeyRoutedEventArgs e)
@@ -66,6 +69,9 @@ namespace Tillsammens.WindowsPhone.App.Pages
             {
                 ViewModel.CreateAccountCmd.Execute(
                     new[] { Login.Text, PasswordBoxFirst.Password, PasswordBoxSecond.Password });
+                PasswordBoxFirst.Password = string.Empty;
+                PasswordBoxSecond.Password = string.Empty;
+                Login.Text = string.Empty;
             }
         }
     }

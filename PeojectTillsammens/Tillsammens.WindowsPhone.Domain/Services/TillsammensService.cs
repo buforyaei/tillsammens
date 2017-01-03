@@ -64,13 +64,25 @@ namespace Tillsammens.WindowsPhone.Domain.Services
         {
             return await GetWebServiceData(() => _tillsammensWebService.UpdateInvitation(invitation));
         }
+
         public async Task<WebResult<Invitation>> GetInvitationAsync(int userId, int friendId)
         {
             return await GetWebServiceData(() => _tillsammensWebService.GetInvitation(userId,friendId));
         }
+
+        public async Task<WebResult<UserModel>> ChangePasswordAsync(UserModel user)
+        {
+            return await GetWebServiceData(() => _tillsammensWebService.ChangePassword(user));
+        }
+
         public async Task<WebResult<Invitation>> DeleteFromFriendsAsync(int invitationId)
         {
             return await GetWebServiceData(() => _tillsammensWebService.DeleteFromFriends(invitationId));
+        }
+
+        public async Task<WebResult<bool>> DeleteAccountAsync(int id)
+        {
+            return await GetWebServiceData(() => _tillsammensWebService.DeleteAccount(id));
         }
     }
 }

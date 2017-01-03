@@ -82,10 +82,24 @@ namespace Tillsammens.WindowsPhone.WebServices.Services
             request.AddJsonBody(new[]{userId,friendId});
             return await CallAsync<Invitation>(request);
         }
+
         public async Task<Invitation> DeleteFromFriends(int invitationId)
         {
             var request = new RestRequest(TillsammensConsts.InvitationsApi + invitationId, Method.DELETE);
             return await CallAsync<Invitation>(request);
+        }
+
+        public async Task<bool> DeleteAccount(int id)
+        {
+            var request = new RestRequest(TillsammensConsts.RemoveAccountApi + id, Method.POST);
+            return await CallAsync<bool>(request);
+        }
+
+        public async Task<UserModel> ChangePassword(UserModel user)
+        {
+            var request = new RestRequest(TillsammensConsts.ChangePassword, Method.POST);
+            request.AddJsonBody(user);
+            return await CallAsync<UserModel>(request);
         }
     }
 }

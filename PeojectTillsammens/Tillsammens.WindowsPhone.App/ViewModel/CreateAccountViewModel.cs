@@ -45,21 +45,21 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
             {
                 IsWorking = false;
                 await DialogService.ShowMessageBox(
-                    "Fields can not be empty!", "Error");
+                    "Fields can not be empty.", "Error");
                 return;
             }
             if (credentials[0].Length > 25)
             {
                 IsWorking = false;
                 await DialogService.ShowMessageBox(
-                    "Login is too long!", "Error");
+                    "Login is too long.", "Error");
                 return;
             }
             if(credentials[1] != credentials[2])
             {
                 IsWorking = false;
                 await DialogService.ShowMessageBox(
-                    "Passwords must not be different!", "Error");
+                    "Passwords must not be different.", "Error");
                 return;
             }
             var user = await TillsammensService.CreateAccountAsync(
@@ -79,7 +79,7 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
             {
                 IsWorking = false;
                 await DialogService.ShowMessageBox(
-                    "Your account has been created!", "Success");
+                    "Your account has been created.", "Success");
                 _navigationService.GoBack();
                 return;
             }

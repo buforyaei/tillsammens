@@ -30,5 +30,115 @@
             Grid.Row="1"
             Text="settings" 
             Style="{StaticResource BigHeaderTextBlockStyle}"/>
+        <ScrollViewer Grid.Row="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Button 
+                 HorizontalContentAlignment="Left"
+                 Grid.Row="0"
+                 Command="{Binding DeleteAccountCmd}"
+                 BorderThickness="0"
+                 Margin="0,0,0,0"
+                 HorizontalAlignment="Stretch" >
+                    <Grid HorizontalAlignment="Left">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock 
+                            Grid.Row="0"
+                            Margin="0"
+                            HorizontalAlignment="Left"
+                            Text="delete account" 
+                            Style="{StaticResource BigHeaderTextBlockStyle}"/>
+                        <TextBlock 
+                            Margin="0"
+                            Grid.Row="1"
+                            HorizontalAlignment="Left"
+                            Text="remove account permanently" 
+                            Style="{StaticResource  HeaderTextBlockStyle}"/>
+                    </Grid>
+                </Button>
+                <Button 
+                 HorizontalContentAlignment="Left"
+                 Grid.Row="1"
+                  
+                 Click="ChangePasswordButton_OnClick"
+                 BorderThickness="0"
+                 Margin="0,0,0,0"
+                 HorizontalAlignment="Stretch" >
+                    <Grid HorizontalAlignment="Left">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock 
+                            Grid.Row="0"
+                            Margin="0"
+                            HorizontalAlignment="Left"
+                            Text="change password" 
+                            Style="{StaticResource BigHeaderTextBlockStyle}"/>
+                        <TextBlock 
+                            Margin="0"
+                            Grid.Row="1"
+                            HorizontalAlignment="Left"
+                            Text="change your current password" 
+                            Style="{StaticResource  HeaderTextBlockStyle}"/>
+                    </Grid>
+                </Button>
+                <StackPanel Grid.Row="2" VerticalAlignment="Center">
+                    <ProgressRing 
+                        IsActive="True"
+                        Foreground="White"
+                        Margin="16"
+                        Visibility="{Binding IsWorking, 
+                            Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    <TextBlock 
+                        Style="{StaticResource HeaderTextBlockStyle}"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Text="Loading..."
+                        Visibility="{Binding IsWorking, 
+                            Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                </StackPanel>
+                <StackPanel
+                    Visibility="{Binding ShowPasswordBoxes,
+                            Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Grid.Row="2"
+                    Orientation="Vertical">
+                    <TextBlock 
+                        Text="old password" 
+                        Style ="{StaticResource DescriptionTextBlockStyle}"/>
+                    <PasswordBox 
+                        KeyUp="OldPassword_OnKeyUp"
+                        Name="OldPassword"
+                        Style ="{StaticResource LightPasswordBoxStyle}"/>
+                    <TextBlock 
+                        Text="new password" 
+                        Style ="{StaticResource DescriptionTextBlockStyle}"/>
+                    <PasswordBox 
+                        KeyUp="NewPassword_OnKeyUp"
+                         Name="NewPassword"
+                        Style ="{StaticResource LightPasswordBoxStyle}"/>
+                    <TextBlock 
+                        Text="confirm new password" 
+                        Style ="{StaticResource DescriptionTextBlockStyle}"/>
+                    <PasswordBox 
+                        KeyUp="NewPasswordSecond_OnKeyUp"
+                        Name="NewPasswordSecond"
+                        Style ="{StaticResource LightPasswordBoxStyle}"/>
+                    <AppBarButton 
+                        Icon="Accept"
+                        Click="ButtonBase_OnClick"
+                        HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>

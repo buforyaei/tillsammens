@@ -31,5 +31,11 @@ namespace Tillsammens.WindowsPhone.Domain.Services.Interfaces
         Task<WebResult<Invitation>> GetInvitationAsync(int userId, int friendId);
 
         Task<WebResult<Invitation>> DeleteFromFriendsAsync(int invitationId);
+
+        Task<WebResult<UserModel>> ChangePasswordAsync(UserModel user);
+
+        Task<WebResult<bool>> DeleteAccountAsync(int id);
+
+
     }
 }
