@@ -21,7 +21,7 @@
     <Grid>
         <maps:MapControl 
             ZoomLevel="12" 
-            Center="{Binding Friends[0].Geopoint}">
+            Center="{Binding Friends[0].Geopoint}" Loaded="MapControl_Loaded_1">
             <maps:MapItemsControl
                  
                 ItemsSource="{Binding Friends}"

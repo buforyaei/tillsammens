@@ -86,5 +86,10 @@ namespace Tillsammens.WindowsPhone.App.Pages
             //MapControl.Center = myGeoPoint;
             //MapControl.ZoomLevel = 15;
         }
+
+        private void MapControl_Loaded_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

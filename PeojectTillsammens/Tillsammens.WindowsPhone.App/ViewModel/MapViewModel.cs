@@ -10,18 +10,24 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using Tillsammens.WindowsPhone.Domain.Services;
+using Tillsammens.WindowsPhone.Domain.Services.Interfaces;
 using Tillsammens.WindowsPhone.WebServices.Dto;
 
 namespace Tillsammens.WindowsPhone.App.ViewModel
 {
-    public class MapViewModel : ViewModelBase
+    public class MapViewModel : TillsammensViewModelBase
     {
         private readonly INavigationService _navigationService;
         private ObservableCollection<FriendModel> _friends;
         private Geopoint _location;
         public ICommand LoadCmd { get; set; }
 
-        public MapViewModel(INavigationService navigationService)
+        public MapViewModel
+            (INavigationService navigationService, 
+            ITillsammensService tillsammensService, 
+            IDialogService dialogService)
+            :base(dialogService,tillsammensService)
+
         {
             _navigationService = navigationService;
             InitializeCommands();
@@ -43,6 +49,7 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
 
         private void Load(FriendModel friend)
         {
+            IsWorking = true;
             var friends = new ObservableCollection<FriendModel>();
             foreach (var f in AppSession.Current.FriendsList)
             {
@@ -64,6 +71,7 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
                 }
             }
             Friends = friends;
+            IsWorking = false;
         }
 
         public void GoBack()

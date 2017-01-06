@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Devices.Geolocation;
+using Windows.System;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using GalaSoft.MvvmLight;
@@ -284,14 +285,21 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
 
         private async Task UpdateGeoPosition()
         {
-            var myGeoposition = await new Geolocator().GetGeopositionAsync();
-            var response = await TillsammensService.UpdateGpsAsync(new UserModel
+            try
             {
-                Id = AppSession.Current.CurrentUser.Id,
-                LastVisit = DateTime.Now,
-                X = myGeoposition.Coordinate.Point.Position.Latitude,
-                Y = myGeoposition.Coordinate.Point.Position.Longitude,
-            });
+                var myGeoposition = await new Geolocator().GetGeopositionAsync();
+                var response = await TillsammensService.UpdateGpsAsync(new UserModel
+                {
+                    Id = AppSession.Current.CurrentUser.Id,
+                    LastVisit = DateTime.Now,
+                    X = myGeoposition.Coordinate.Point.Position.Latitude,
+                    Y = myGeoposition.Coordinate.Point.Position.Longitude,
+                });
+            }
+            catch
+            {
+                await DialogService.ShowMessage("Location service must be turned on.", "Location");
+            }
         }
 
         private async Task GetInvitations()
