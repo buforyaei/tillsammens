@@ -3,3 +3,5 @@ https://pl.wikipedia.org/wiki/Media_spo%C5%82eczno%C5%9Bciowe
 [1] https://developer.microsoft.com/en-us/windows/apps/design
 
 [2] https://www.microsoft.com/pl-pl/store/apps/windows
+
+[3] http://patryknet.blogspot.com/2010/07/bindowanie-danych-w-wpf-cz-1.html
