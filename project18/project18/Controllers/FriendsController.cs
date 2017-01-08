@@ -11,37 +11,38 @@ namespace project18.Controllers
 {
     public class FriendsController : ApiController
     {
-        DataModelContainer db = new DataModelContainer();
-
         [ResponseType(typeof(IEnumerable<User>))]
         public IHttpActionResult GetFriends(int id)
         {
             try
             {
-                var invitations =
-                    db.InvitationSet
-                        .Where(invitation => (invitation.RecieverId == id || invitation.SenderId == id) 
-                            && invitation.Status.Contains("Accepted"))
-                        .ToList();
-                var friends = new List<User>();
-                foreach (var i in invitations)
+                using (var db = new DataModelContainer())
                 {
-                    if (i.SenderId == id) friends.Add(db.UserSet.Find(i.RecieverId));
-                    else friends.Add(db.UserSet.Find(i.SenderId));
-                }
-                var sortedFriends = (from f in friends
-                    where f.CloseDate > DateTime.Now
-                    select new User
+                    var invitations =
+                        db.InvitationSet
+                            .Where(invitation => (invitation.RecieverId == id || invitation.SenderId == id)
+                                                 && invitation.Status.Contains("Accepted"))
+                            .ToList();
+                    var friends = new List<User>();
+                    foreach (var i in invitations)
                     {
-                        Id = f.Id,
-                        Login = f.Login,
-                        PhotoUri = f.PhotoUri,
-                        LastVisit = f.LastVisit,
-                        Desc = f.Desc,
-                        X = f.X,
-                        Y = f.Y,
-                    }).ToList();
-                return Ok(sortedFriends);
+                        if (i.SenderId == id) friends.Add(db.UserSet.Find(i.RecieverId));
+                        else friends.Add(db.UserSet.Find(i.SenderId));
+                    }
+                    var sortedFriends = (from f in friends
+                        where f.CloseDate > DateTime.Now
+                        select new User
+                        {
+                            Id = f.Id,
+                            Login = f.Login,
+                            PhotoUri = f.PhotoUri,
+                            LastVisit = f.LastVisit,
+                            Desc = f.Desc,
+                            X = f.X,
+                            Y = f.Y,
+                        }).ToList();
+                    return Ok(sortedFriends);
+                }
             }
             catch(Exception ex)
             {
