@@ -34,6 +34,7 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
         private bool _noFriends;
         private bool _isUpdatingProfile;
         private bool _isSearching;
+        private bool _isGoogleDataSent;
         private bool _noResultsSearched;
         private Invitation _globalCurrentInvitation;
 
@@ -75,6 +76,11 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
         {
             get { return _isSearching; }
             set { Set(ref _isSearching, value); }
+        }
+        public bool IsGoogleDataSent
+        {
+            get { return _isGoogleDataSent; }
+            set { Set(ref _isGoogleDataSent, value); }
         }
         public string SearchPhrase
         {
@@ -281,6 +287,19 @@ namespace Tillsammens.WindowsPhone.App.ViewModel
             await InitializeFriendsList();
             await UpdateGeoPosition();
             await GetInvitations();
+            if (!IsGoogleDataSent)
+            {
+                SendGoogleAnalyticsData();
+            }
+           
+        }
+
+        private void SendGoogleAnalyticsData()
+        {
+            GoogleAnalytics.EasyTracker.GetTracker().SendView("MainPage");
+            GoogleAnalytics.EasyTracker.GetTracker().SendEvent
+                (DateTime.Now.ToString("g"), AppSession.Current.CurrentUser.Login, null, 0);
+            IsGoogleDataSent = true;
         }
 
         private async Task UpdateGeoPosition()
