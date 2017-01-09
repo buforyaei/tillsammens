@@ -16,16 +16,38 @@
 
 [8] AZURE https://portal.azure.com/
 
+[9] RESTfull service - https://www.asp.net/web-api/overview/older-versions/build-restful-apis-with-aspnet-web-api
+
+[10] HTTP CODES - https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+
+[11] MVVM WP - https://msdn.microsoft.com/pl-pl/library/hh848247.aspx
+
+[12] http://patryknet.blogspot.com/2010/07/bindowanie-danych-w-wpf-cz-1.html
 
 
 
-[3]!!!!!!!!!!!! http://patryknet.blogspot.com/2010/07/bindowanie-danych-w-wpf-cz-1.html
-[5] https://developer.microsoft.com/en-us/windows/downloads/windows-8-1-sdk
+
 
 MVVM patern - https://msdn.microsoft.com/en-us/library/hh848246.aspx 
-MVVM WP - https://msdn.microsoft.com/pl-pl/library/hh848247.aspx
 RestSharp - https://github.com/restsharp/RestSharp/wiki
-RESTfull service - https://www.asp.net/web-api/overview/older-versions/build-restful-apis-with-aspnet-web-api
 GIT - https://git-scm.com/about
 WP developing apps - https://msdn.microsoft.com/en-us/library/windows/apps/ff402551(v=vs.105).aspx
+[5] https://developer.microsoft.com/en-us/windows/downloads/windows-8-1-sdk
+
+za³¹cznik A
+ <connectionStrings>
+    <add name="DataModelContainer" connectionString="metadata=res://*/Models.DataModel.csdl|res://*/Models.DataModel.ssdl|res://*/Models.DataModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=project18server.database.windows.net;initial catalog=project18dataBase;persist security info=True;user id=tyt;password=Logo6666;multipleactiveresultsets=True;application name=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+  </connectionStrings>
+
+za³acznik B - UserController skopiowac
+
+za³¹cznik C - skrpt sql
+
+za³¹cznik D - GetFriends z FriendsController
+
+za³¹cznik E - TillsammnsViewModelBase
+
+//za³¹cznik F - RestClientBase
+
+
 
