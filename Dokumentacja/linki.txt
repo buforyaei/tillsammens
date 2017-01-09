@@ -1,30 +1,31 @@
-https://pl.wikipedia.org/wiki/Media_spo%C5%82eczno%C5%9Bciowe
+
 
 [1] https://developer.microsoft.com/en-us/windows/apps/design
 
+[2]  Visual studuio https://msdn.microsoft.com/pl-pl/library/dd831853.aspx
 
-[3] http://patryknet.blogspot.com/2010/07/bindowanie-danych-w-wpf-cz-1.html
+[3].NET - https://www.microsoft.com/net/tutorials/csharp/getting-started
 
-[4] https://portal.azure.com/
+[4] ASP.NET - http://www.centrumxp.pl/dotNet/142,01-ASPNET-co-to-wlasciwie-jest.aspx
 
+[5] c# ksaizke spisac
+
+[6] GIT - https://git-scm.com/about
+
+[7] EF - http://reset.ath.bielsko.pl/technologienet/artykuly/csharp/2012/wprowadzenie-do-entity-framework-adonet.aspx
+
+[8] AZURE https://portal.azure.com/
+
+
+
+
+[3]!!!!!!!!!!!! http://patryknet.blogspot.com/2010/07/bindowanie-danych-w-wpf-cz-1.html
 [5] https://developer.microsoft.com/en-us/windows/downloads/windows-8-1-sdk
 
-literatura:
-
 MVVM patern - https://msdn.microsoft.com/en-us/library/hh848246.aspx 
-
 MVVM WP - https://msdn.microsoft.com/pl-pl/library/hh848247.aspx
- 
 RestSharp - https://github.com/restsharp/RestSharp/wiki
-
 RESTfull service - https://www.asp.net/web-api/overview/older-versions/build-restful-apis-with-aspnet-web-api
-
 GIT - https://git-scm.com/about
-
-EF - http://reset.ath.bielsko.pl/technologienet/artykuly/csharp/2012/wprowadzenie-do-entity-framework-adonet.aspx
-
 WP developing apps - https://msdn.microsoft.com/en-us/library/windows/apps/ff402551(v=vs.105).aspx
 
-.NET - https://www.microsoft.com/net/tutorials/csharp/getting-started
-
-ASP.NET - http://www.centrumxp.pl/dotNet/142,01-ASPNET-co-to-wlasciwie-jest.aspx
