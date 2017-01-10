@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using project18.Models;
@@ -22,10 +15,6 @@ namespace project18.Controllers
         {
             return db.UserSet;
         }
-
-
-       
-
         // POST: api/Users
         [ResponseType(typeof (User))]
         public IHttpActionResult PostUser(User user)
@@ -36,7 +25,8 @@ namespace project18.Controllers
             }
             try
             {
-                var users = db.UserSet.Where(u => u.Login == user.Login).ToList();
+                var users = db.UserSet.Where
+                    (u => u.Login == user.Login).ToList();
                 if (users.Any())
                 {
                     return Unauthorized();

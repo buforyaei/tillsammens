@@ -18,11 +18,9 @@ namespace project18.Controllers
             {
                 using (var db = new DataModelContainer())
                 {
-                    var invitations =
-                        db.InvitationSet
-                            .Where(invitation => (invitation.RecieverId == id || invitation.SenderId == id)
-                                                 && invitation.Status.Contains("Accepted"))
-                            .ToList();
+                    var invitations = db.InvitationSet .Where(invitation => 
+                    (invitation.RecieverId == id || invitation.SenderId == id)
+                     && invitation.Status.Contains("Accepted")).ToList();
                     var friends = new List<User>();
                     foreach (var i in invitations)
                     {
@@ -30,8 +28,7 @@ namespace project18.Controllers
                         else friends.Add(db.UserSet.Find(i.SenderId));
                     }
                     var sortedFriends = (from f in friends
-                        where f.CloseDate > DateTime.Now
-                        select new User
+                        where f.CloseDate > DateTime.Now select new User
                         {
                             Id = f.Id,
                             Login = f.Login,
