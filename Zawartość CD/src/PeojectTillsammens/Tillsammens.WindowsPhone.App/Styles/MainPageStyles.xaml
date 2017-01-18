@@ -1,0 +1,225 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+	xmlns:utils="using:Tillsammens.WindowsPhone.App.Utils"
+	mc:Ignorable="d">
+
+    <DataTemplate x:Key="ItemTemplate">
+        <Grid  MinHeight="4" Margin="0,0,0,4">
+            <interactivity:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="Holding">
+                    <utils:OpenListItemMenuFlyoutAction/>
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+            <FlyoutBase.AttachedFlyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem
+                        Text="remove"
+                        Command="{Binding Main.RemoveFriendCmd,
+                            Source={StaticResource Locator}}"
+                        CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                </MenuFlyout>
+            </FlyoutBase.AttachedFlyout>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Ellipse Height="80"  Width="80" Grid.Column="0" Fill="{Binding Converter={StaticResource RandomBrushConverter}}"/>
+            <TextBlock Text="{Binding Login, 
+                    Converter={StaticResource LoginToLetterConverter}}"
+                       Grid.Column="0"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Style="{StaticResource BigHeaderTextBlockStyle}"
+                       Margin="0"/>
+            <Ellipse Height="80"  Width="80" Grid.Column="0">
+                <Ellipse.Fill>
+                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding PhotoUri}"/>
+                </Ellipse.Fill>
+            </Ellipse>
+            <Border Grid.Column="1" Background="Black"  Opacity="0.6" Margin="8,8,0,8" HorizontalAlignment="Stretch">
+                <Grid  HorizontalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0"  HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition  Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{Binding Login}" HorizontalAlignment="Left" Foreground="White"  FontSize="20" Margin="6,2,2,2" />
+                        <TextBlock Grid.Column="1" Text="{Binding LastVisit, Converter={StaticResource DateTimeToShortFormatConverter}}" HorizontalAlignment="Right" Foreground="White" FontSize="16"  Margin="2,2,6,2"/>        
+                    </Grid>
+                    <TextBlock Grid.Row="1" Text="{Binding Desc}" TextWrapping="Wrap"   Foreground="White" FontSize="16" Margin="6,0,6,2"  HorizontalAlignment="Stretch"/>
+           
+                </Grid>
+            </Border>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="SearchedUserItemTemplate">
+        <Grid  MinHeight="4" Margin="0,0,0,4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+           
+            <Ellipse Height="50"  Width="50">
+                <Ellipse.Fill>
+                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding PhotoUri}"/>
+                </Ellipse.Fill>
+            </Ellipse>
+            <Border Grid.Column="1" Background="Black"  Opacity="0.8" Margin="8,8,0,8" HorizontalAlignment="Stretch">
+                <TextBlock Text="{Binding Login}"  HorizontalAlignment="Center" Foreground="White" FontSize="24" VerticalAlignment="Stretch" Margin="6,2,2,2" />
+            </Border>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="FriendTileTemplate">
+        <Grid  
+            Margin="0,0,7,7"
+            Height="105" 
+            Width="105">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Ellipse Height="80"  Width="80" Grid.Row="0" Fill="{Binding Converter={StaticResource RandomBrushConverter}}"/>
+            <TextBlock Text="{Binding Login, 
+                    Converter={StaticResource LoginToLetterConverter}}"
+                       Grid.Row="0"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Style="{StaticResource BigHeaderTextBlockStyle}"
+                       Margin="0"/>
+            <Ellipse 
+                Height="80"  
+                Width="80"
+                Grid.Row="0">
+                <Ellipse.Fill>
+                    <ImageBrush 
+                        Stretch="UniformToFill" 
+                        ImageSource="{Binding PhotoUri}"/>
+                </Ellipse.Fill>
+            </Ellipse>
+            <Border 
+                Grid.Row="1" 
+                Background="Black"  
+                Opacity="0.6" 
+                HorizontalAlignment="Stretch" 
+                VerticalAlignment="Bottom" 
+                Height="25" 
+                Margin="6,2,6,0" >
+                <TextBlock 
+                    Text="{Binding Login}" 
+                    VerticalAlignment="Center"     
+                    HorizontalAlignment="Center" 
+                    Foreground="White"  
+                    FontSize="16"
+                    Margin="2" />
+            </Border>
+        </Grid>
+    </DataTemplate>
+
+    <Style x:Key="SimpleItemContainerStyle" TargetType="ListViewItem">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    </Style>
+
+
+    <Thickness x:Key="PivotPortraitThemePadding">0</Thickness>
+
+    <Thickness x:Key="PivotLandscapeThemePadding">0</Thickness>
+    <Style x:Key="PivotStyle" TargetType="Pivot">
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Foreground" Value="{ThemeResource PhoneForegroundBrush}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <Grid />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Pivot">
+                    <Grid x:Name="RootElement" Background="{TemplateBinding Background}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="Orientation">
+                                <VisualState x:Name="Portrait">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" Storyboard.TargetName="TitleContentControl">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PivotPortraitThemePadding}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Landscape">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" Storyboard.TargetName="TitleContentControl">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PivotLandscapeThemePadding}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentControl x:Name="TitleContentControl" ContentTemplate="{TemplateBinding TitleTemplate}" Content="{TemplateBinding Title}" Style="{StaticResource PivotTitleContentControlStyle}" />
+                        <ScrollViewer x:Name="ScrollViewer" HorizontalSnapPointsAlignment="Center" HorizontalSnapPointsType="MandatorySingle" HorizontalScrollBarVisibility="Hidden" Margin="{TemplateBinding Padding}" Grid.Row="1" Template="{StaticResource ScrollViewerScrollBarlessTemplate}" VerticalSnapPointsType="None" VerticalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled" VerticalContentAlignment="Stretch" ZoomMode="Disabled">
+                            <PivotPanel x:Name="Panel" VerticalAlignment="Stretch">
+                                <PivotHeaderPanel x:Name="Header">
+                                    <PivotHeaderPanel.RenderTransform>
+                                        <CompositeTransform x:Name="HeaderTranslateTransform" TranslateX="0" />
+                                    </PivotHeaderPanel.RenderTransform>
+                                </PivotHeaderPanel>
+                                <ItemsPresenter x:Name="PivotItemPresenter">
+                                    <ItemsPresenter.RenderTransform>
+                                        <TranslateTransform x:Name="ItemsPresenterTranslateTransform" X="0" />
+                                    </ItemsPresenter.RenderTransform>
+                                </ItemsPresenter>
+                            </PivotPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <ItemsPanelTemplate x:Key="ItemsPanelTemplate">
+        <Grid />
+    </ItemsPanelTemplate>
+    <Thickness x:Key="PivotItemMargin">0</Thickness>
+    <Style x:Key="PivotItemStyle" TargetType="PivotItem">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Margin" Value="{ThemeResource PivotItemMargin}" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="PivotItem">
+                    <Grid Background="{TemplateBinding Background}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="Pivot">
+                                <VisualState x:Name="Right" />
+                                <VisualState x:Name="Left" />
+                                <VisualState x:Name="Center" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
+

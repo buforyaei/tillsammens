@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="InvitationSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SenderId" Type="int" Nullable="false" />
+          <Property Name="RecieverId" Type="int" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="SenderLogin" Type="nvarchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LastVisit" Type="datetime" Nullable="false" />
+          <Property Name="OpenDate" Type="datetime" Nullable="false" />
+          <Property Name="CloseDate" Type="datetime" Nullable="false" />
+          <Property Name="Desc" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="PhotoUri" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="X" Type="float" Nullable="false" />
+          <Property Name="Y" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="DataModelStoreContainer">
+          <EntitySet Name="InvitationSet" EntityType="Self.InvitationSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserSet" EntityType="Self.UserSet" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="DataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="DataModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="UserSet" EntityType="DataModel.User" />
+          <EntitySet Name="InvitationSet" EntityType="DataModel.Invitation" />
+        </EntityContainer>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="25" Unicode="true" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="LastVisit" Type="DateTime" Nullable="false" />
+          <Property Name="OpenDate" Type="DateTime" Nullable="false" />
+          <Property Name="CloseDate" Type="DateTime" Nullable="false" />
+          <Property Name="Desc" Type="String" Nullable="false" MaxLength="120" Unicode="true" FixedLength="false" />
+          <Property Name="PhotoUri" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="X" Type="Double" Nullable="false" />
+          <Property Name="Y" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Invitation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SenderId" Type="Int32" Nullable="false" />
+          <Property Name="RecieverId" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="SenderLogin" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DataModelStoreContainer" CdmEntityContainer="DataModelContainer">
+    <EntitySetMapping Name="UserSet">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.User)">
+        <MappingFragment StoreEntitySet="UserSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="LastVisit" ColumnName="LastVisit" />
+          <ScalarProperty Name="OpenDate" ColumnName="OpenDate" />
+          <ScalarProperty Name="CloseDate" ColumnName="CloseDate" />
+          <ScalarProperty Name="Desc" ColumnName="Desc" />
+          <ScalarProperty Name="PhotoUri" ColumnName="PhotoUri" />
+          <ScalarProperty Name="X" ColumnName="X" />
+          <ScalarProperty Name="Y" ColumnName="Y" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InvitationSet">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.Invitation)">
+        <MappingFragment StoreEntitySet="InvitationSet">
+          <ScalarProperty Name="SenderLogin" ColumnName="SenderLogin" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SenderId" ColumnName="SenderId" />
+          <ScalarProperty Name="RecieverId" ColumnName="RecieverId" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
