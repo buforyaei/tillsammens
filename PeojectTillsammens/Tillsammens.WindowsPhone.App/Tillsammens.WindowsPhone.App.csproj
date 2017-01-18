@@ -15,7 +15,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{76F1466A-8B6D-4E39-A767-685A06062A39};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-    <AppxPackageDir>C:\Users\Tytus\Desktop\</AppxPackageDir>
+    <AppxPackageDir>C:\Users\tdragon\Desktop\</AppxPackageDir>
     <AppxBundlePlatforms>neutral</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -103,8 +103,6 @@
     <Compile Include="Converters\LoginToLetterConverter.cs" />
     <Compile Include="Converters\RandomBrushConverter.cs" />
     <Compile Include="Messages\ShowTopProgressBarMessage.cs" />
-    <Compile Include="Modules\AutomapperConfiguration.cs" />
-    <Compile Include="Modules\AutomapperProfile.cs" />
     <Compile Include="Modules\UiModule.cs" />
     <Compile Include="Pages\CreateAccountPage.xaml.cs">
       <DependentUpon>CreateAccountPage.xaml</DependentUpon>
@@ -151,7 +149,6 @@
     <Content Include="Resources\Images\background_4.png" />
     <Content Include="Resources\Images\background_5.png" />
     <Content Include="Resources\Images\profile.png" />
-    <Content Include="Resources\Images\pulse.gif" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -199,12 +196,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\" />
-    <Folder Include="Model\" />
-    <Folder Include="Strings\" />
-    <Folder Include="UserControls\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Reference Include="AutoMapper, Version=5.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.5.1.1\lib\portable-net45+win8+wpa81\AutoMapper.dll</HintPath>

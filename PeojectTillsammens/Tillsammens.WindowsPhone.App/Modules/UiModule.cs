@@ -14,7 +14,6 @@ namespace Tillsammens.WindowsPhone.App.Modules
     {
         public override void Load()
         {
-            //AutomapperConfiguration.Configure();
             Kernel.Bind<LoginViewModel>().ToSelf().InSingletonScope();
             Kernel.Bind<CreateAccountViewModel>().ToSelf().InSingletonScope();
             Kernel.Bind<MainViewModel>().ToSelf().InSingletonScope();
@@ -34,6 +33,5 @@ namespace Tillsammens.WindowsPhone.App.Modules
             navigationService.Configure("Map", typeof(MapPage));
             return navigationService;
         }
-         
     }
 }
